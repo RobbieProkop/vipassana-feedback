@@ -14,15 +14,17 @@ import FeedbackForm from "./pages/FeedbackForm";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminFeedbackForm from "./pages/AdminFeedbackForm";
+import ErrorPage from "./pages/ErrorPage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Home />} />
-      <Route path="/feedback/:id" element={<FeedbackForm />} />
+      <Route path="/feedback" element={<FeedbackForm />} />
       <Route path="/login" element={<AdminLogin />} />
       <Route path="/admin/feedback" element={<AdminDashboard />} />
       <Route path="/admin/feedback/:id" element={<AdminFeedbackForm />} />
+      <Route path="*" element={<ErrorPage />} />
     </Route>
   )
 );
