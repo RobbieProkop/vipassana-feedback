@@ -1,0 +1,24 @@
+@import "../../styles/variables.scss";
+
+.alertContainer {
+  @include flex-center;
+  max-width: 1400px;
+  height: 80px;
+  border-radius: 10px;
+
+  &.info {
+    background-color: #c3e2f8;
+    color: #084298;
+    border: #aed6f1;
+  }
+  &.success {
+    background-color: #c3e2d4;
+    color: #0f5132;
+    border: #badbcc;
+  }
+  &.danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border: #f5c2c7;
+  }
+}

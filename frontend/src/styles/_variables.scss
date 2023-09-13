@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Poppins:wght@300;400;600&family=Titillium+Web:wght@600&display=swap");
+
+$primary: #fff;
+$secondary: #9c6b14;
+$gray: #717070;
+$light-gray: #f5f5f5;
+$dark: #333;
+$button: #b78730;
+$font-family: "Poppins", sans-serif;
+$container-width: 1400px;
+
+@mixin flex-evenly {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
