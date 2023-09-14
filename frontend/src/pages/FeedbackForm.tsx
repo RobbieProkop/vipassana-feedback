@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/feedbackForm.module.scss";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const FeedbackForm = () => {
   const today = new Date();
@@ -10,7 +11,6 @@ const FeedbackForm = () => {
     "question5-2": string;
     "question5-3": string;
     "question5-4": string;
-    "question5-5": string;
   }
 
   interface FormDataState {
@@ -40,7 +40,6 @@ const FeedbackForm = () => {
       "question5-2": "",
       "question5-3": "",
       "question5-4": "",
-      "question5-5": "",
     },
     additional: "",
   });
@@ -61,13 +60,23 @@ const FeedbackForm = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
 
-  const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (name.startsWith("question5")) {
+      setFormData((prevState) => ({
+        ...prevState,
+        question5: {
+          ...prevState.question5,
+          [name]: value,
+        },
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
+  const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const formFilled = [
       courseStart,
@@ -77,9 +86,7 @@ const FeedbackForm = () => {
       question3,
       question4,
     ].every((value) => value !== "");
-    const q5Selected = Object.values(question5).every((value) => {
-      value !== "";
-    });
+    const q5Selected = Object.values(question5).every((value) => value !== "");
 
     if (!formFilled || !q5Selected) {
       Swal.fire({
@@ -89,6 +96,9 @@ const FeedbackForm = () => {
       });
       return;
     }
+
+    const res = await axios.post("/api/feedback", formData);
+    console.log("res :>> ", res);
   };
 
   return (
@@ -121,7 +131,7 @@ const FeedbackForm = () => {
             <label htmlFor="course-start">Course Start Date *</label>
             <input
               type="date"
-              name="course-start"
+              name="courseStart"
               placeholder="Course Start Date"
               value={courseStart}
               max={today.toISOString().split("T")[0]}
@@ -132,7 +142,7 @@ const FeedbackForm = () => {
             <label htmlFor="days-served">Number Of Days Served *</label>
             <input
               type="number"
-              name="days-served"
+              name="daysServed"
               min={0}
               value={daysServed}
               onChange={handleChange}
@@ -192,7 +202,7 @@ const FeedbackForm = () => {
             <span>0-Poor 5-Exceptional</span>
           </label>
           <div className={styles.formGroupCheck}>
-            <label htmlFor="Q1">- How well were you onboarded? *</label>
+            <label htmlFor="Q5-1">- How well were you onboarded? *</label>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
@@ -264,7 +274,7 @@ const FeedbackForm = () => {
           </div>
 
           <div className={styles.formGroupCheck}>
-            <label htmlFor="Question1">
+            <label htmlFor="Q5-2">
               - Availability of required resources (tools, material etc.) *
             </label>
             <div className={styles.formCheck}>
@@ -338,7 +348,7 @@ const FeedbackForm = () => {
           </div>
 
           <div className={styles.formGroupCheck}>
-            <label htmlFor="Question1">- How was the food? *</label>
+            <label htmlFor="Q5-3">- How was the food? *</label>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
@@ -409,7 +419,7 @@ const FeedbackForm = () => {
             </div>
           </div>
           <div className={styles.formGroupCheck}>
-            <label htmlFor="Question1">- Your overall experience *</label>
+            <label htmlFor="Q5-4">- Your overall experience *</label>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
@@ -472,77 +482,6 @@ const FeedbackForm = () => {
                 name="question5-4"
                 value="5"
                 checked={question5["question5-4"] === "5"}
-                onChange={handleChange}
-              />
-              <label className="form-check-label" htmlFor="inlineRadio5">
-                5
-              </label>
-            </div>
-          </div>
-          <div className={styles.formGroupCheck}>
-            <label htmlFor="Question1">- How well were you onboarded? *</label>
-            <div className={styles.formCheck}>
-              <input
-                className="form-check-input"
-                type="radio"
-                name="question5-5"
-                value="1"
-                checked={question5["question5-5"] === "1"}
-                onChange={handleChange}
-              />
-              <label className="form-check-label" htmlFor="inlineRadio1">
-                1
-              </label>
-            </div>
-            <div className={styles.formCheck}>
-              <input
-                className="form-check-input"
-                type="radio"
-                name="question5-5"
-                value="2"
-                checked={question5["question5-5"] === "2"}
-                onChange={handleChange}
-              />
-              <label className="form-check-label" htmlFor="inlineRadio2">
-                2
-              </label>
-            </div>
-
-            <div className={styles.formCheck}>
-              <input
-                className="form-check-input"
-                type="radio"
-                name="question5-5"
-                value="3"
-                checked={question5["question5-5"] === "3"}
-                onChange={handleChange}
-              />
-              <label className="form-check-label" htmlFor="inlineRadio3">
-                3
-              </label>
-            </div>
-
-            <div className={styles.formCheck}>
-              <input
-                className="form-check-input"
-                type="radio"
-                name="question5-5"
-                value="4"
-                checked={question5["question5-5"] === "4"}
-                onChange={handleChange}
-              />
-              <label className="form-check-label" htmlFor="inlineRadio4">
-                4
-              </label>
-            </div>
-
-            <div className={styles.formCheck}>
-              <input
-                className="form-check-input"
-                type="radio"
-                name="question5-5"
-                value="5"
-                checked={question5["question5-5"] === "5"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio5">
