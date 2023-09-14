@@ -2,11 +2,24 @@
 
 .form {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin: 3rem auto;
+
+  h1 {
+    margin-bottom: 3rem;
+  }
   .formGroup {
     display: flex;
     flex-direction: column;
+    margin-bottom: 3rem;
+    label {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+
     input,
     textarea {
       background-color: #fff;
@@ -19,6 +32,17 @@
       &:focus {
         outline: none;
       }
+    }
+  }
+  .formGroupCheck {
+    display: grid;
+    grid-template-columns: 4fr repeat(5, 1fr);
+    padding: 1rem;
+    label {
+      // max-width: 300px;
+    }
+    input {
+      margin-right: 5px;
     }
   }
 }
