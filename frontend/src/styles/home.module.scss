@@ -4,4 +4,12 @@
   @include flex-center;
   flex-direction: column;
   height: 100%;
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .button {
+    min-width: 400px;
+  }
 }
