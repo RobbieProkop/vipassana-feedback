@@ -31,12 +31,12 @@ body {
     grid-template-rows: 130px auto 130px;
   }
 
-  main {
-    @include flex-center;
-    padding: 2rem 1rem;
-    min-height: 60vh;
-    padding: 3rem;
-  }
+  // main {
+  //   // @include flex-center;
+  //   padding: 2rem 1rem;
+  //   min-height: 60vh;
+  //   padding: 3rem;
+  // }
 }
 
 a {
@@ -56,14 +56,14 @@ ul {
 
 .btn {
   color: $primary;
-  margin-top: 10px;
+  background: $button;
+  margin: 1rem 0;
   padding: 1rem 1.2rem;
   border: none;
   border-radius: 5px;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 600;
-  background: $button;
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
 
@@ -83,6 +83,9 @@ ul {
       opacity: 1;
       cursor: default;
     }
+  }
+  &-block {
+    width: 100%;
   }
 }
 
