@@ -19,7 +19,16 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 //Description: Get All Feedback
 //Route: GET /api/feedback
 //access: Private
-const getAllFeedback = asyncHandler(async (req, res) => {});
+const getAllFeedback = asyncHandler(async (req, res) => {
+  const feedback = await sequelize.query(
+    `SELECT * FROM Feedback
+  ORDER BY id DESC`,
+    {
+      raw: true,
+      type: QueryTypes.SELECT,
+    }
+  );
+});
 
 //Description: Get Single Feedback
 //Route: GET /api/feedback/:id
