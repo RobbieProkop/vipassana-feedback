@@ -8,9 +8,10 @@
     "moduleResolution": "NodeNext",
     "target": "ES2020",
     "sourceMap": true,
-    "outDir": "build"
+    "outDir": "build",
+    "rootDir": "./"
   },
 
-  "include": ["/**/*"],
+  "include": ["**/*"],
   "exclude": ["node_modules", "build"]
 }
