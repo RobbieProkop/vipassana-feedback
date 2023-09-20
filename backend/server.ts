@@ -19,15 +19,15 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/api/feedback", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
+// app.get("/api/feedback", (req, res) => {
+//   res.json({ message: "Hello from server!" });
+// });
 
-app.get("/api/feedback/:id", (req, res) => {
-  const feedback = "Some feedback here";
+// app.get("/api/feedback/:id", (req, res) => {
+//   const feedback = "Some feedback here";
 
-  res.json({ feedback });
-});
+//   res.json({ feedback });
+// });
 
 app.use("/api/feedback", feedbackRoutes);
 
