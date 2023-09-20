@@ -36,6 +36,11 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 //access: Private
 const getFeedbackForDate = asyncHandler(async (req, res) => {
   const today = new Date().toISOString().slice(0, 10);
+  const { startDate, endDate = today } = req.query;
+
+  if (!startDate) {
+    return res.status(400).json({ message: "Start date is required" });
+  }
   const feedback = await sequelize.query(
     `SELECT * FROM Feedback
     WHERE date BETWEEN :startDate AND :endDate
@@ -44,12 +49,14 @@ const getFeedbackForDate = asyncHandler(async (req, res) => {
       raw: true,
       type: QueryTypes.SELECT,
       replacements: {
-        startDate: req.query.startDate,
-        endDate: req.query.endDate ? req.query.endDate : today,
+        startDate,
+        endDate,
       },
     }
   );
-  res.status(200).json();
+
+  console.log("feedback :>> ", feedback);
+  res.status(200).json(feedback);
 });
 
 //Description: Get Single Feedback
