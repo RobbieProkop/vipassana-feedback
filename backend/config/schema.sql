@@ -1,3 +1,4 @@
+-- feedback schema table
 CREATE TABLE feedback (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
@@ -23,7 +24,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- dummy data
+-- insert dummy data
 
 INSERT INTO feedback (
     name, 
@@ -55,3 +56,15 @@ VALUES (
     5, 
     'The experience was wonderful, looking forward to more opportunities.'
 );
+
+-- user schema
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    isAdmin BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- insert dummy data
