@@ -1,13 +1,24 @@
 import asyncHandler from "../middleware/asyncHandler.js";
+import User, { UserModel } from "../models/userModel.js";
+import bcrypt from "bcryptjs";
 
 // DESC: authenticate user & get token
 // Route: POST /api/users/login
 // Access: Public
 
-const authUser = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
-  res.json({ message: "loged in bro" });
+  if (!username || !password) {
+    res.status(400);
+    throw new Error("Please fill in all fields");
+  }
+
+  //check if user exists
+  const user = await User.findOne({ where: { username } });
+  
+
+  res.json({ message: "logged in bro" });
 });
 
 // DESC: register a new user
@@ -15,7 +26,46 @@ const authUser = asyncHandler(async (req, res) => {
 // Access: Public
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    res.status(400);
+    throw new Error("Please add all fields");
+  }
+
+  //check if user exists
+  const userExists = await User.findOne({ where: { username } });
+
+  if (userExists){
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  try {
+    //create user
+    const user:UserModel = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+      isAdmin: false,
+    });
+  
+    if (user){
+      res.status(201).json({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token:
+      })
+    }
+    
+  } catch (error) {
+    
+  }
 
   res.json({ message: "registered bro" });
 });
@@ -73,7 +123,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 export {
-  authUser,
+  loginUser,
   getUserProfile,
   registerUser,
   logoutUser,

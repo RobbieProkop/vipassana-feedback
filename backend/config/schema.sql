@@ -68,3 +68,15 @@ CREATE TABLE users (
 );
 
 -- insert dummy data
+-- INSERT INTO users (
+--     name, 
+--     email, 
+--     password,
+--     isAdmin,
+-- )
+-- VALUES (
+--     process.env.ADMIN_NAME,
+--     process.env.ADMIN_EMAIL,
+--     process.env.ADMIN_PASSWORD,
+--     true,
+-- )
