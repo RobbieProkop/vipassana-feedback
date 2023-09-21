@@ -16,20 +16,29 @@ const loginUser = asyncHandler(async (req, res) => {
 
   //check if user exists
   const user = await User.findOne({ where: { username } });
-  console.log("user :>> ", user);
-  res.json({ message: "logged in bro" });
-  // if (!user) {
-  //   res.status(401);
-  //   throw new Error("Invalid credentials");
-  // }
 
-  // res.status(200).json({
-  //   id: user.id,
-  //   username: user.username,
-  //   email: user.email,
-  //   isAdmin: user.isAdmin,
-  //   token: null,
-  // });
+  if (!user) {
+    res.status(401);
+    throw new Error("Invalid credentials");
+  }
+
+  const hashedPassword = user.password;
+
+  console.log("hashedPassword :>> ", hashedPassword);
+  const isMatch = await bcrypt.compare(password, hashedPassword);
+
+  if (!isMatch) {
+    res.status(401);
+    throw new Error("Invalid credentials");
+  }
+
+  res.status(200).json({
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: null,
+  });
 });
 
 // DESC: register a new user
@@ -64,15 +73,15 @@ const registerUser = asyncHandler(async (req, res) => {
       isAdmin: false,
     });
 
-    // if (user){
-    //   res.status(201).json({
-    //     id: user.id,
-    //     username: user.username,
-    //     email: user.email,
-    //     isAdmin: user.isAdmin,
-    //     token:
-    //   })
-    // }
+    if (user) {
+      res.status(201).json({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token: null,
+      });
+    }
   } catch (error) {}
 
   res.json({ message: "registered bro" });
