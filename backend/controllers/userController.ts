@@ -1,6 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import User, { UserModel } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 // DESC: authenticate user & get token
 // Route: POST /api/users/login
@@ -23,8 +24,6 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   const hashedPassword = user.password;
-
-  console.log("hashedPassword :>> ", hashedPassword);
   const isMatch = await bcrypt.compare(password, hashedPassword);
 
   if (!isMatch) {
@@ -32,12 +31,22 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid credentials");
   }
 
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: "10d",
+  });
+
+  //set JWT as httponly cookie
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 10 * 24 * 60 * 60 * 1000, //10 days
+  });
   res.status(200).json({
     id: user.id,
     username: user.username,
     email: user.email,
     isAdmin: user.isAdmin,
-    token: null,
   });
 });
 
