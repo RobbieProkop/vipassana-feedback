@@ -88,7 +88,6 @@ const registerUser = asyncHandler(async (req, res) => {
         username: user.username,
         email: user.email,
         isAdmin: user.isAdmin,
-        token: null,
       });
     }
   } catch (error) {}
