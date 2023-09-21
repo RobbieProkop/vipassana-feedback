@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 // DESC: authenticate user & get token
 // Route: POST /api/users/login
 // Access: Public
-
 const loginUser = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
@@ -53,7 +52,6 @@ const loginUser = asyncHandler(async (req, res) => {
 // DESC: register a new user
 // Route: POST /api/users
 // Access: Public
-
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -94,13 +92,15 @@ const registerUser = asyncHandler(async (req, res) => {
 
   res.json({ message: "registered bro" });
 });
+
 // DESC: logout user & clear httponly cookie
 // Route: POST /api/users/logout
 // Access: Private
-
 const logoutUser = asyncHandler(async (req, res) => {
-  res.json({ message: "logged out bro" });
+  res.clearCookie("token");
+  res.json({ message: "logged out" });
 });
+
 // DESC: get user profile
 // Route: GET /api/users/profile
 // Access: Private
@@ -144,6 +144,17 @@ const updateUser = asyncHandler(async (req, res) => {
 // Access: Private/Admin
 
 const deleteUser = asyncHandler(async (req, res) => {
+  const { id } = req.body;
+
+  //check if user exists
+  const user = await User.findByPk(id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  await user.destroy();
   res.json({ message: "User Deleted" });
 });
 
