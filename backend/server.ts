@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import feedbackRoutes from "./routes/feedbackRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import pool from "./config/db.js";
 
 const PORT = process.env.PORT || 8080;
@@ -19,10 +20,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-// app.get("/api/feedback", (req, res) => {
-//   res.json({ message: "Hello from server!" });
-// });
-
 // app.get("/api/feedback/:id", (req, res) => {
 //   const feedback = "Some feedback here";
 
@@ -30,6 +27,7 @@ app.get("/", async (req, res) => {
 // });
 
 app.use("/api/feedback", feedbackRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

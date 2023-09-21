@@ -1,7 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 
 // DESC: authenticate user & get token
-// Route: GET /api/users/login
+// Route: POST /api/users/login
 // Access: Public
 
 const authUser = asyncHandler(async (req, res) => {
@@ -37,20 +37,49 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // Route: PUT /api/users/profile
 // Access: Private
 
-const updateUser = asyncHandler(async (req, res) => {
+const updateUserProfile = asyncHandler(async (req, res) => {
   res.json({ message: "updated profile" });
 });
 // DESC: Get Users
 // Route: GET /api/users
 // Access: Private/Admin
 
-const getUser = asyncHandler(async (req, res) => {
+const getAllUsers = asyncHandler(async (req, res) => {
   res.json({ message: "users GOT" });
 });
+
+// DESC: Get User By ID
+// Route: GET /api/users/:id
+// Access: Private/Admin
+
+const getUserById = asyncHandler(async (req, res) => {
+  res.json({ message: "user by id GOT" });
+});
+
+// DESC: Update user as admin
+// Route: PUT /api/users/:id
+// Access: Private/Admin
+
+const updateUser = asyncHandler(async (req, res) => {
+  res.json({ message: "User updated" });
+});
+
 // DESC: DELETE user
-// Route: POST /api/users/:id
+// Route: DELETE /api/users/:id
 // Access: Private/Admin
 
 const deleteUser = asyncHandler(async (req, res) => {
   res.json({ message: "User Deleted" });
 });
+
+export {
+  authUser,
+  getUserProfile,
+  registerUser,
+  logoutUser,
+  updateUserProfile,
+  getAllUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+};
