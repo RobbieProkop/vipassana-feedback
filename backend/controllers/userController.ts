@@ -1,7 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import User, { UserModel } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import generateToken from "../utils/generateToken.js";
 
 // DESC: authenticate user & get token
 // Route: POST /api/users/login
@@ -29,18 +29,7 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("Invalid credentials");
   }
-
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-    expiresIn: "10d",
-  });
-
-  //set JWT as httponly cookie
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    maxAge: 10 * 24 * 60 * 60 * 1000, //10 days
-  });
+  generateToken(res, user.id);
   res.status(200).json({
     id: user.id,
     username: user.username,
@@ -81,6 +70,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
 
     if (user) {
+      generateToken(res, user.id);
       res.status(201).json({
         id: user.id,
         username: user.username,
@@ -104,9 +94,20 @@ const logoutUser = asyncHandler(async (req, res) => {
 // DESC: get user profile
 // Route: GET /api/users/profile
 // Access: Private
-
 const getUserProfile = asyncHandler(async (req, res) => {
-  res.json({ message: "get profile" });
+  // const user = await User.findByPk(req.user.id);
+  const user = req.user;
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  res.status(200).json({
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  });
 });
 // DESC: update user profile (password & username)
 // Route: PUT /api/users/profile
@@ -118,7 +119,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // DESC: Get Users
 // Route: GET /api/users
 // Access: Private/Admin
-
 const getAllUsers = asyncHandler(async (req, res) => {
   res.json({ message: "users GOT" });
 });
@@ -126,7 +126,6 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // DESC: Get User By ID
 // Route: GET /api/users/:id
 // Access: Private/Admin
-
 const getUserById = asyncHandler(async (req, res) => {
   res.json({ message: "user by id GOT" });
 });
@@ -134,7 +133,6 @@ const getUserById = asyncHandler(async (req, res) => {
 // DESC: Update user as admin
 // Route: PUT /api/users/:id
 // Access: Private/Admin
-
 const updateUser = asyncHandler(async (req, res) => {
   res.json({ message: "User updated" });
 });
@@ -142,7 +140,6 @@ const updateUser = asyncHandler(async (req, res) => {
 // DESC: DELETE user
 // Route: DELETE /api/users/:id
 // Access: Private/Admin
-
 const deleteUser = asyncHandler(async (req, res) => {
   const { id } = req.body;
 
