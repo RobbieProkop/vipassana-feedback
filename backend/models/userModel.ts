@@ -19,15 +19,17 @@ export interface UserType {
   email: string;
   password: string;
   isAdmin: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface UserModel extends Model<UserType>, UserType {}
 
 const User = sequelize.define<UserModel>(
-  "User",
+  "user",
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
@@ -50,6 +52,16 @@ const User = sequelize.define<UserModel>(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {}

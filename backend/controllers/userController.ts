@@ -16,9 +16,20 @@ const loginUser = asyncHandler(async (req, res) => {
 
   //check if user exists
   const user = await User.findOne({ where: { username } });
-  
-
+  console.log("user :>> ", user);
   res.json({ message: "logged in bro" });
+  // if (!user) {
+  //   res.status(401);
+  //   throw new Error("Invalid credentials");
+  // }
+
+  // res.status(200).json({
+  //   id: user.id,
+  //   username: user.username,
+  //   email: user.email,
+  //   isAdmin: user.isAdmin,
+  //   token: null,
+  // });
 });
 
 // DESC: register a new user
@@ -36,7 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
   //check if user exists
   const userExists = await User.findOne({ where: { username } });
 
-  if (userExists){
+  if (userExists) {
     res.status(400);
     throw new Error("User already exists");
   }
@@ -46,26 +57,23 @@ const registerUser = asyncHandler(async (req, res) => {
 
   try {
     //create user
-    const user:UserModel = await User.create({
+    const user: UserModel = await User.create({
       username,
       email,
       password: hashedPassword,
       isAdmin: false,
     });
-  
-    if (user){
-      res.status(201).json({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        token:
-      })
-    }
-    
-  } catch (error) {
-    
-  }
+
+    // if (user){
+    //   res.status(201).json({
+    //     id: user.id,
+    //     username: user.username,
+    //     email: user.email,
+    //     isAdmin: user.isAdmin,
+    //     token:
+    //   })
+    // }
+  } catch (error) {}
 
   res.json({ message: "registered bro" });
 });
