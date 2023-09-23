@@ -2,6 +2,9 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import User, { UserModel } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import throwError from "../utils/throwError.js";
+import updateUserPassword from "../utils/updateUserPassword.js";
+import userResponse from "../utils/userResponse.js";
 
 // DESC: authenticate user & get token
 // Route: POST /api/users/login
@@ -9,33 +12,21 @@ import generateToken from "../utils/generateToken.js";
 const loginUser = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    res.status(400);
-    throw new Error("Please fill in all fields");
-  }
+  if (!username || !password)
+    return throwError(res, 400, "Please fill in all fields");
 
   //check if user exists
   const user = await User.findOne({ where: { username } });
 
-  if (!user) {
-    res.status(401);
-    throw new Error("Invalid credentials");
-  }
+  if (!user) return throwError(res, 401, "Invalid credentials");
 
   const hashedPassword = user.password;
   const isMatch = await bcrypt.compare(password, hashedPassword);
 
-  if (!isMatch) {
-    res.status(401);
-    throw new Error("Invalid credentials");
-  }
+  if (!isMatch) return throwError(res, 401, "Invalid credentials");
+
   generateToken(res, user.id);
-  res.status(200).json({
-    id: user.id,
-    username: user.username,
-    email: user.email,
-    isAdmin: user.isAdmin,
-  });
+  res.status(200).json(userResponse(user));
 });
 
 // DESC: register a new user
@@ -44,18 +35,13 @@ const loginUser = asyncHandler(async (req, res) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
 
-  if (!username || !email || !password) {
-    res.status(400);
-    throw new Error("Please add all fields");
-  }
+  if (!username || !email || !password)
+    return throwError(res, 400, "Please fill in all fields");
 
   //check if user exists
   const userExists = await User.findOne({ where: { username } });
 
-  if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
-  }
+  if (userExists) return throwError(res, 400, "User already exists");
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
@@ -71,16 +57,12 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (user) {
       generateToken(res, user.id);
-      res.status(201).json({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        isAdmin: user.isAdmin,
-      });
+      res.status(201).json(userResponse(user));
     }
-  } catch (error) {}
-
-  res.json({ message: "registered bro" });
+  } catch (error) {
+    console.log("error :>> ", error);
+    throwError(res, 400, error);
+  }
 });
 
 // DESC: logout user & clear httponly cookie
@@ -97,25 +79,43 @@ const logoutUser = asyncHandler(async (req, res) => {
 const getUserProfile = asyncHandler(async (req, res) => {
   // const user = await User.findByPk(req.user.id);
   const user = req.user;
-  if (!user) {
-    res.status(404);
-    throw new Error("User not found");
-  }
+  if (!user) return throwError(res, 404, "User not found");
 
-  res.status(200).json({
-    id: user.id,
-    username: user.username,
-    email: user.email,
-    isAdmin: user.isAdmin,
-  });
+  res.status(200).json(userResponse(user));
 });
+
 // DESC: update user profile (password & username)
 // Route: PUT /api/users/profile
 // Access: Private
-
 const updateUserProfile = asyncHandler(async (req, res) => {
-  res.json({ message: "updated profile" });
+  const user = await User.findByPk(req.user.id);
+
+  if (!user) return throwError(res, 404, "User not found");
+
+  const { username, email, prevPassword, newPassword } = req.body;
+
+  user.username = username || user.username;
+  user.email = email || user.email;
+
+  if (prevPassword && newPassword) {
+    if (prevPassword !== newPassword) {
+      return throwError(res, 400, "Passwords do not match");
+    }
+
+    const isPasswordUpdated = await updateUserPassword(
+      user,
+      prevPassword,
+      newPassword
+    );
+
+    if (!isPasswordUpdated) return throwError(res, 401, "Invalid credentials");
+
+    await user.save();
+    generateToken(res, user.id);
+    res.status(200).json(userResponse(user));
+  }
 });
+
 // DESC: Get Users
 // Route: GET /api/users
 // Access: Private/Admin
