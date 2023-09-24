@@ -109,11 +109,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     );
 
     if (!isPasswordUpdated) return throwError(res, 401, "Invalid credentials");
-
-    await user.save();
-    generateToken(res, user.id);
-    res.status(200).json(userResponse(user));
   }
+
+  await user.save();
+  generateToken(res, user.id);
+  res.status(200).json(userResponse(user));
 });
 
 // DESC: Get Users
