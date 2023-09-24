@@ -5,6 +5,7 @@ import generateToken from "../utils/generateToken.js";
 import throwError from "../utils/throwError.js";
 import updateUserPassword from "../utils/updateUserPassword.js";
 import userResponse from "../utils/userResponse.js";
+import { Op } from "sequelize";
 
 // DESC: authenticate user & get token
 // Route: POST /api/users/login
@@ -109,6 +110,18 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     );
 
     if (!isPasswordUpdated) return throwError(res, 401, "Invalid credentials");
+  }
+
+  //check if username or email exists
+  const userExists = await User.findOne({
+    where: { [Op.or]: [{ username }, { email }] },
+  });
+  if (userExists) {
+    if (userExists.email === email) {
+      return throwError(res, 400, "Email already exists");
+    } else {
+      return throwError(res, 400, "Username already exists");
+    }
   }
 
   await user.save();
