@@ -127,7 +127,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // Access: Private/Admin
 const getAllUsers = asyncHandler(async (req, res) => {
   const users = await User.findAll();
-
+  if (!users) return throwError(res, 404, "No users found");
   res.status(200).json(users);
 });
 
@@ -136,7 +136,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // Access: Private/Admin
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findByPk(req.params.id);
-
+  if (!user) return throwError(res, 404, "User not found");
   res.status(200).json(user);
 });
 
