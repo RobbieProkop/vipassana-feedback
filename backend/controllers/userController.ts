@@ -162,15 +162,12 @@ const updateUser = asyncHandler(async (req, res) => {
 // Route: DELETE /api/users/:id
 // Access: Private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
-  const { id } = req.body;
+  const id = req.params.id;
 
   //check if user exists
   const user = await User.findByPk(id);
 
-  if (!user) {
-    res.status(404);
-    throw new Error("User not found");
-  }
+  if (!user) return throwError(res, 404, "User not found");
 
   await user.destroy();
   res.json({ message: "User Deleted" });
