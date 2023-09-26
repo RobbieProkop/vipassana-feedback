@@ -143,7 +143,20 @@ const getUserById = asyncHandler(async (req, res) => {
 // DESC: Update user as admin
 // Route: PUT /api/users/:id
 // Access: Private/Admin
-const updateUser = asyncHandler(async (req, res) => {});
+const updateUser = asyncHandler(async (req, res) => {
+  const { username, email, isAdmin } = req.body;
+  const id = req.params.id;
+  const user = await User.findByPk(id);
+
+  if (!user) return throwError(res, 404, "User not found");
+
+  user.username = username || user.username;
+  user.email = email || user.email;
+  user.isAdmin = isAdmin || user.isAdmin;
+
+  await user.save();
+  res.status(200).json(userResponse(user));
+});
 
 // DESC: DELETE user
 // Route: DELETE /api/users/:id
