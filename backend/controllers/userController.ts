@@ -93,6 +93,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (!user) return throwError(res, 404, "User not found");
 
   const { username, email, prevPassword, newPassword } = req.body;
+  if (username.includes(" "))
+    return throwError(res, 400, "Username cannot contain spaces");
 
   user.username = username || user.username;
   user.email = email || user.email;
@@ -124,7 +126,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // Route: GET /api/users
 // Access: Private/Admin
 const getAllUsers = asyncHandler(async (req, res) => {
-  res.json({ message: "users GOT" });
+  const users = await User.findAll();
+
+  res.status(200).json(users);
 });
 
 // DESC: Get User By ID
