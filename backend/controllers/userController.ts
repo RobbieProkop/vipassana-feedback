@@ -122,6 +122,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json(userResponse(user));
 });
 
+//ADMIN ROUTES
 // DESC: Get Users
 // Route: GET /api/users
 // Access: Private/Admin
