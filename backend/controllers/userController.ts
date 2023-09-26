@@ -135,15 +135,15 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // Route: GET /api/users/:id
 // Access: Private/Admin
 const getUserById = asyncHandler(async (req, res) => {
-  res.json({ message: "user by id GOT" });
+  const user = await User.findByPk(req.params.id);
+
+  res.status(200).json(user);
 });
 
 // DESC: Update user as admin
 // Route: PUT /api/users/:id
 // Access: Private/Admin
-const updateUser = asyncHandler(async (req, res) => {
-  res.json({ message: "User updated" });
-});
+const updateUser = asyncHandler(async (req, res) => {});
 
 // DESC: DELETE user
 // Route: DELETE /api/users/:id
