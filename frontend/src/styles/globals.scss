@@ -96,3 +96,7 @@ ul {
 .flex-between {
   @include flex-between;
 }
+
+.password-input {
+  display: flex;
+}

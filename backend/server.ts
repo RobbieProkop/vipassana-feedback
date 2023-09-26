@@ -5,6 +5,7 @@ import feedbackRoutes from "./routes/feedbackRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 import pool from "./config/db.js";
+import cors from "cors";
 
 const PORT = process.env.PORT || 8080;
 dotenv.config();
@@ -17,6 +18,12 @@ app.use(express.urlencoded({ extended: true }));
 
 //cookie parser middleware
 app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 //this is an example of a route handler to spin up the server
 app.get("/heartbeat", async (req, res) => {
