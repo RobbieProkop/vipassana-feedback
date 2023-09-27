@@ -9,7 +9,7 @@ const AdminLogin = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [togglePassword, setTogglePassword] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,14 +21,14 @@ const AdminLogin = () => {
 
     if (!username || !password) return alert("Please fill all the fields");
 
-    setLoading(true);
+    // setLoading(true);
     await axios.post(`${USERS_URL}/login`, userData);
-    setLoading(false);
+    // setLoading(false);
     console.log("logged in ");
     // dispatch(login(userData));
   };
 
-  if (loading) return <Spinner />;
+  // if (loading) return <Spinner />;
   return (
     <div className="container">
       <section className={styles.heading}>
@@ -51,7 +51,8 @@ const AdminLogin = () => {
               }}
             />
           </div>
-          <div className={styles.formGroup + " password-input"}>
+
+          <div className={styles.passwordInput}>
             <input
               type={!togglePassword ? "password" : "text"}
               className={styles.formControl}
@@ -71,6 +72,7 @@ const AdminLogin = () => {
               {togglePassword && <FaEye />}
             </div>
           </div>
+
           <div className={styles.formGroup}>
             <button className="btn btn-block" type="submit">
               Login

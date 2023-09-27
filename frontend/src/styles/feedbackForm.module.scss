@@ -51,4 +51,25 @@
       }
     }
   }
+
+  .passwordInput {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+
+    input,
+    textarea {
+      background-color: #fff;
+      border: none;
+      color: $dark;
+      font-size: 1.2rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 5px 0 0 5px;
+      width: 100%;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }
