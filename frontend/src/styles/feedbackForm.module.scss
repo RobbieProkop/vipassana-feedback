@@ -58,11 +58,22 @@
       }
     }
   }
+  .hidden {
+    display: none;
+  }
+  .error {
+    color: red;
+    font-size: 1.2rem;
+    margin: 0 1rem 0 1rem;
+  }
+  .errorControl {
+    border: 1px solid red;
+  }
 
   .passwordInput {
     display: flex;
     align-items: center;
-    margin-bottom: 3rem;
+    // margin-bottom: 3rem;
 
     input,
     textarea {

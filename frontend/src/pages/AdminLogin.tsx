@@ -9,6 +9,7 @@ const AdminLogin = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [togglePassword, setTogglePassword] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   // const [loading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,11 +22,13 @@ const AdminLogin = () => {
 
     if (!username || !password) return alert("Please fill all the fields");
 
-    // setLoading(true);
-    await axios.post(`${USERS_URL}/login`, userData);
-    // setLoading(false);
-    console.log("logged in ");
-    // dispatch(login(userData));
+    try {
+      const { data } = await axios.post(`${USERS_URL}/login`, userData);
+      console.log("logged in ", data);
+    } catch (error: any) {
+      // alert(error.response.data.message);
+      setError(true);
+    }
   };
 
   // if (loading) return <Spinner />;
@@ -41,7 +44,11 @@ const AdminLogin = () => {
           <div className={styles.formGroup}>
             <input
               type="text"
-              className={styles.formControl}
+              className={
+                error
+                  ? `${styles.formControl} ${styles.errorControl}`
+                  : styles.formControl
+              }
               id="username"
               name="username"
               value={username}
@@ -50,12 +57,19 @@ const AdminLogin = () => {
                 setUsername(e.target.value);
               }}
             />
+            <p className={error ? styles.error : styles.hidden}>
+              Invalid Credentials
+            </p>
           </div>
 
           <div className={styles.passwordInput}>
             <input
               type={!togglePassword ? "password" : "text"}
-              className={styles.formControl}
+              className={
+                error
+                  ? `${styles.formControl} ${styles.errorControl}`
+                  : styles.formControl
+              }
               id="password"
               name="password"
               value={password}
@@ -64,6 +78,7 @@ const AdminLogin = () => {
                 setPassword(e.target.value);
               }}
             />
+
             <div
               className="password-icon"
               onClick={() => setTogglePassword(!togglePassword)}
@@ -72,6 +87,9 @@ const AdminLogin = () => {
               {togglePassword && <FaEye />}
             </div>
           </div>
+          <p className={error ? styles.error : styles.hidden}>
+            Invalid Credentials
+          </p>
 
           <div className={styles.formGroup}>
             <button className="btn btn-block" type="submit">
