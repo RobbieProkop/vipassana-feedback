@@ -40,12 +40,17 @@ const AdminLogin = () => {
       const { data } = await axios.post(`${USERS_URL}/login`, userData);
       toast.success(`Welcome ${data.username}`);
       localStorage.setItem("userInfo", JSON.stringify(data));
-      setLoading(false);
+
       navigate("/admin/feedback");
     } catch (error: any) {
       // alert(error.response.data.message);
+
+      toast.error(
+        error?.response?.data?.message || error?.data?.message || error.error
+      );
       setError(true);
     }
+    setLoading(false);
   };
 
   if (loading) return <Spinner />;
