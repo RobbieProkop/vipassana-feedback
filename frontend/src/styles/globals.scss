@@ -67,6 +67,10 @@ ul {
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
 
+  &:focus {
+    outline: none;
+  }
+
   &-primary {
     background-color: $button;
   }
@@ -95,18 +99,4 @@ ul {
 
 .flex-between {
   @include flex-between;
-}
-
-.password-icon {
-  background-color: #fff;
-  border: none;
-  color: $dark;
-  height: 54px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 0 5px 5px 0;
-
-  &:hover {
-    cursor: pointer;
-  }
 }

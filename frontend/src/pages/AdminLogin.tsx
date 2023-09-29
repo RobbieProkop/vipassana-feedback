@@ -24,6 +24,7 @@ const AdminLogin = () => {
 
     try {
       const { data } = await axios.post(`${USERS_URL}/login`, userData);
+      setError(false);
       console.log("logged in ", data);
     } catch (error: any) {
       // alert(error.response.data.message);
@@ -80,7 +81,11 @@ const AdminLogin = () => {
             />
 
             <div
-              className="password-icon"
+              className={
+                error
+                  ? `${styles.passwordIcon} ${styles.errorControl}`
+                  : styles.passwordIcon
+              }
               onClick={() => setTogglePassword(!togglePassword)}
             >
               {!togglePassword && <FaEyeSlash />}
