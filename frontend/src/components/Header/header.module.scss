@@ -4,6 +4,7 @@
   height: 130px;
   background-color: $dark;
   color: $primary;
+  padding: 0 1rem;
 
   .flexBetween {
     @include flex-between;
