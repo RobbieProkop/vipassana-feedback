@@ -4,13 +4,19 @@ import axios from "axios";
 import { USERS_URL } from "../constants";
 import Spinner from "../components/Spinner/Spinner";
 import styles from "../styles/feedbackForm.module.scss";
+import { toast } from "react-toastify";
 
 const AdminLogin = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [togglePassword, setTogglePassword] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  // const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const user = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo")!)
+    : null;
+
+  // if (user)
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,16 +29,20 @@ const AdminLogin = () => {
     if (!username || !password) return alert("Please fill all the fields");
 
     try {
+      setLoading(true);
       const { data } = await axios.post(`${USERS_URL}/login`, userData);
       setError(false);
       console.log("logged in ", data);
+      toast.success("Logged in successfully");
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
     } catch (error: any) {
       // alert(error.response.data.message);
       setError(true);
     }
   };
 
-  // if (loading) return <Spinner />;
+  if (loading) return <Spinner />;
   return (
     <div className="container">
       <section className={styles.heading}>
