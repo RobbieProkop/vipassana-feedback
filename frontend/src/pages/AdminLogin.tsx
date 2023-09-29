@@ -1,5 +1,6 @@
 import { FaSignInAlt, FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USERS_URL } from "../constants";
 import Spinner from "../components/Spinner/Spinner";
@@ -7,6 +8,7 @@ import styles from "../styles/feedbackForm.module.scss";
 import { toast } from "react-toastify";
 
 const AdminLogin = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [togglePassword, setTogglePassword] = useState<boolean>(false);
@@ -16,7 +18,11 @@ const AdminLogin = () => {
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
 
-  // if (user)
+  useEffect(() => {
+    if (user) {
+      navigate("/admin/feedback");
+    }
+  }, [user]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,12 +36,12 @@ const AdminLogin = () => {
 
     try {
       setLoading(true);
-      const { data } = await axios.post(`${USERS_URL}/login`, userData);
       setError(false);
-      console.log("logged in ", data);
-      toast.success("Logged in successfully");
+      const { data } = await axios.post(`${USERS_URL}/login`, userData);
+      toast.success(`Welcome ${data.username}`);
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
+      navigate("/admin/feedback");
     } catch (error: any) {
       // alert(error.response.data.message);
       setError(true);
