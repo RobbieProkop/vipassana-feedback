@@ -1,5 +1,12 @@
 @import "variables";
 
+.heading {
+  width: 100%;
+  max-width: 800px;
+  margin: 5rem auto 3rem;
+  color: $gray;
+}
+
 .form {
   width: 100%;
   max-width: 800px;
