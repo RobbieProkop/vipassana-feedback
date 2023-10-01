@@ -14,15 +14,15 @@ const AdminLogin = () => {
   const [togglePassword, setTogglePassword] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const user = localStorage.getItem("userInfo")
+  const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
 
   useEffect(() => {
-    if (user) {
+    if (userInfo) {
       navigate("/admin/feedback");
     }
-  }, [user]);
+  }, [userInfo]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

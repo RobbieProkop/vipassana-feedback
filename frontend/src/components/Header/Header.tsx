@@ -1,10 +1,15 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./header.module.scss";
 import user from "/user.png";
 import logo from "/logo.png";
 
 const Header: FC = () => {
+  const userInfo = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo")!)
+    : null;
+
+  useEffect(() => {}, [userInfo]);
   return (
     <header className={styles.header}>
       <div className="container">
@@ -17,17 +22,32 @@ const Header: FC = () => {
               loading="lazy"
             />
           </Link>
-          <div>
-            <Link className={styles.link} to="/login">
-              <img
-                src={user}
-                alt="user Icon"
-                className={styles.icon}
-                loading="lazy"
-              />
-              Sign In
-            </Link>
-          </div>
+          {userInfo ? (
+            <ul>
+              <li>
+                <Link className={styles.link} to="/admin/profile">
+                  Profile
+                </Link>
+              </li>
+              <li>
+                <Link className={styles.link} to="/logout">
+                  Logout
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <div>
+              <Link className={styles.link} to="/login">
+                <img
+                  src={user}
+                  alt="user Icon"
+                  className={styles.icon}
+                  loading="lazy"
+                />
+                Sign In
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </header>
