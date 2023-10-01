@@ -75,10 +75,27 @@
   .header {
     .flexBetween {
       flex-direction: column;
+      justify-content: center;
 
       .menu {
-        top: 65px;
+        top: 85px;
         right: auto;
+
+        .icon {
+          max-width: 24px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .header {
+    padding: 0;
+    .flexBetween {
+      align-items: left;
+      .logo {
+        max-width: 350px;
       }
     }
   }
