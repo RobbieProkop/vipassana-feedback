@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./header.module.scss";
 import user from "/user.png";
@@ -8,6 +8,8 @@ const Header: FC = () => {
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
+
+  const [navOpen, setNavOpen] = useState<boolean>(false);
 
   useEffect(() => {}, [userInfo]);
   return (
@@ -23,18 +25,31 @@ const Header: FC = () => {
             />
           </Link>
           {userInfo ? (
-            <ul>
-              <li>
-                <Link className={styles.link} to="/admin/profile">
-                  Profile
-                </Link>
-              </li>
-              <li>
-                <Link className={styles.link} to="/logout">
-                  Logout
-                </Link>
-              </li>
-            </ul>
+            <nav className={styles.menu}>
+              <p onClick={() => setNavOpen(!navOpen)}>
+                <img
+                  src={user}
+                  alt="user Icon"
+                  className={styles.icon}
+                  loading="lazy"
+                />
+                <span>{userInfo.username}</span>
+              </p>
+              {navOpen && (
+                <ul>
+                  <li>
+                    <Link className={styles.link} to="/admin/profile">
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className={styles.link} to="/logout">
+                      Logout
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </nav>
           ) : (
             <div>
               <Link className={styles.link} to="/login">
