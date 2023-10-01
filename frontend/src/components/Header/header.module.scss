@@ -17,7 +17,7 @@
 
     .menu {
       position: absolute;
-      top: 5px;
+      top: 45px;
       right: 65px;
       p {
         font-size: 1.2rem;
@@ -28,7 +28,57 @@
         }
         span {
           margin-left: 5px;
+          font-size: 1.5rem;
         }
+      }
+      ul {
+        background-color: #fff;
+        border: 1px solid $dark;
+        border-radius: 5px;
+        color: $dark;
+        padding: 1rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .header {
+    .flexBetween {
+      .logo {
+        max-width: 500px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 825px) {
+  .header {
+    .flexBetween {
+      .logo {
+        max-width: 400px;
+      }
+
+      .menu {
+        right: 30px;
+        p {
+          span {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 625px) {
+  .header {
+    .flexBetween {
+      flex-direction: column;
+
+      .menu {
+        top: 65px;
+        right: auto;
       }
     }
   }
