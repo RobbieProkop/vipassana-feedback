@@ -19,9 +19,11 @@
       position: absolute;
       top: 45px;
       right: 65px;
-      p {
+      div {
+        @include flex-center;
         font-size: 1.2rem;
         transition: color 0.3s ease-in-out;
+
         &:hover {
           cursor: pointer;
           color: $button;
@@ -31,7 +33,7 @@
           font-size: 1.5rem;
         }
         .arrow {
-          rotate: 90deg;
+          rotate: 180deg;
         }
       }
       ul {

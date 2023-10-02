@@ -26,16 +26,18 @@ const Header: FC = () => {
           </Link>
           {userInfo ? (
             <nav className={styles.menu}>
-              <p onClick={() => setNavOpen(!navOpen)}>
+              <div onClick={() => setNavOpen(!navOpen)}>
                 <img
                   src={user}
                   alt="user Icon"
                   className={styles.icon}
                   loading="lazy"
                 />
-                <span className={styles.name}>{userInfo.username}</span>
-                <span className={styles.arrow}>&#x5e;</span>
-              </p>
+                <p className={styles.name}>{userInfo.username}</p>
+                <p className={navOpen ? styles.arrowOpen : styles.arrow}>
+                  &#x5e;
+                </p>
+              </div>
               {navOpen && (
                 <ul>
                   <li>
