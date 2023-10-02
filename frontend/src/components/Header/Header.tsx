@@ -46,7 +46,7 @@ const Header: FC = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className={styles.link} to="/logout">
+                    <Link className={styles.link} to="/">
                       Logout
                     </Link>
                   </li>
