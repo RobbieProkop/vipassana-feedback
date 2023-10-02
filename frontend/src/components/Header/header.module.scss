@@ -26,9 +26,12 @@
           cursor: pointer;
           color: $button;
         }
-        span {
-          margin-left: 5px;
+        .name {
+          margin: 0 5px;
           font-size: 1.5rem;
+        }
+        .arrow {
+          rotate: 90deg;
         }
       }
       ul {
@@ -62,7 +65,7 @@
       .menu {
         right: 30px;
         p {
-          span {
+          .name {
             font-size: 1.2rem;
           }
         }

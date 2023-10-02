@@ -33,7 +33,8 @@ const Header: FC = () => {
                   className={styles.icon}
                   loading="lazy"
                 />
-                <span>{userInfo.username}</span>
+                <span className={styles.name}>{userInfo.username}</span>
+                <span className={styles.arrow}>&#x5e;</span>
               </p>
               {navOpen && (
                 <ul>
