@@ -11,8 +11,6 @@ const App = () => {
   const closeNav = () => {
     if (navOpen) setNavOpen(false);
   };
-
-  console.log("navOpen :>> ", navOpen);
   return (
     <>
       <Header navOpen={navOpen} setNavOpen={setNavOpen} />

@@ -25,8 +25,11 @@ const Header: FC<HeaderProps> = ({ navOpen, setNavOpen }) => {
     navigate("/");
   };
 
+  const closeNav = () => {
+    if (navOpen) setNavOpen(false);
+  };
   return (
-    <header className={styles.header}>
+    <header className={styles.header} onClick={closeNav}>
       <div className="container">
         <div className={styles.flexBetween}>
           <Link className={styles.link} to="/">
