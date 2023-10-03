@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./header.module.scss";
 import user from "/user.png";
@@ -18,9 +18,9 @@ const Header: FC = () => {
     console.log("logged out");
     localStorage.removeItem("userInfo");
     await axios.post(`${USERS_URL}/logout`);
+    setNavOpen(false);
     navigate("/");
   };
-  useEffect(() => {}, [userInfo, logout]);
 
   return (
     <header className={styles.header}>
@@ -60,7 +60,7 @@ const Header: FC = () => {
               )}
             </nav>
           ) : (
-            <div>
+            <nav>
               <Link className={styles.link} to="/login">
                 <img
                   src={user}
@@ -70,7 +70,7 @@ const Header: FC = () => {
                 />
                 Sign In
               </Link>
-            </div>
+            </nav>
           )}
         </div>
       </div>
