@@ -1,6 +1,6 @@
 import { FaSignInAlt, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USERS_URL } from "../constants";
 import Spinner from "../components/Spinner/Spinner";

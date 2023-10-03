@@ -57,7 +57,15 @@ const Header: FC<HeaderProps> = ({ navOpen, setNavOpen }) => {
               {navOpen && (
                 <ul>
                   <li className={styles.link}>
-                    <Link to="/admin/profile">Profile</Link>
+                    <Link to="/admin/feedback">Feedback</Link>
+                  </li>
+                  {userInfo.isAdmin && (
+                    <li className={styles.link}>
+                      <Link to="/admin/profiles">Users Dashboard</Link>
+                    </li>
+                  )}
+                  <li className={styles.link}>
+                    <Link to="/profile">Profile</Link>
                   </li>
                   <li className={styles.link} onClick={logout}>
                     Logout
