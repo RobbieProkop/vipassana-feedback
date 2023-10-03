@@ -1,17 +1,27 @@
 import { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./header.module.scss";
 import user from "/user.png";
 import logo from "/logo.png";
+import { USERS_URL } from "../../constants";
+import axios from "axios";
 
 const Header: FC = () => {
+  const navigate = useNavigate();
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
 
   const [navOpen, setNavOpen] = useState<boolean>(false);
 
-  useEffect(() => {}, [userInfo]);
+  const logout = async () => {
+    console.log("logged out");
+    localStorage.removeItem("userInfo");
+    await axios.post(`${USERS_URL}/logout`);
+    navigate("/");
+  };
+  useEffect(() => {}, [userInfo, logout]);
+
   return (
     <header className={styles.header}>
       <div className="container">
@@ -40,15 +50,11 @@ const Header: FC = () => {
               </div>
               {navOpen && (
                 <ul>
-                  <li>
-                    <Link className={styles.link} to="/admin/profile">
-                      Profile
-                    </Link>
+                  <li className={styles.link}>
+                    <Link to="/admin/profile">Profile</Link>
                   </li>
-                  <li>
-                    <Link className={styles.link} to="/">
-                      Logout
-                    </Link>
+                  <li className={styles.link} onClick={logout}>
+                    Logout
                   </li>
                 </ul>
               )}
