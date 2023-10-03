@@ -6,13 +6,16 @@ import logo from "/logo.png";
 import { USERS_URL } from "../../constants";
 import axios from "axios";
 
-const Header: FC = () => {
+export interface HeaderProps {
+  navOpen: boolean;
+  setNavOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Header: FC<HeaderProps> = ({ navOpen, setNavOpen }) => {
   const navigate = useNavigate();
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
-
-  const [navOpen, setNavOpen] = useState<boolean>(false);
 
   const logout = async () => {
     console.log("logged out");
