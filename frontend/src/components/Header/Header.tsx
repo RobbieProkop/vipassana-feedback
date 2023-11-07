@@ -30,63 +30,61 @@ const Header: FC<HeaderProps> = ({ navOpen, setNavOpen }) => {
   };
   return (
     <header className={styles.header} onClick={closeNav}>
-      <div className="container">
-        <div className={styles.flexBetween}>
-          <Link className={styles.link} to="/">
-            <img
-              src={logo}
-              alt="Vipassana Logo"
-              className={styles.logo}
-              loading="lazy"
-            />
-          </Link>
-          {userInfo ? (
-            <nav className={styles.menu}>
-              <div onClick={() => setNavOpen(!navOpen)}>
-                <img
-                  src={user}
-                  alt="user Icon"
-                  className={styles.icon}
-                  loading="lazy"
-                />
-                <p className={styles.name}>{userInfo.username}</p>
-                <p className={navOpen ? styles.arrowOpen : styles.arrow}>
-                  &#x5e;
-                </p>
-              </div>
-              {navOpen && (
-                <ul>
+      <div className={styles.flexBetween}>
+        <Link className={styles.link} to="/">
+          <img
+            src={logo}
+            alt="Vipassana Logo"
+            className={styles.logo}
+            loading="lazy"
+          />
+        </Link>
+        {userInfo ? (
+          <nav className={styles.menu}>
+            <div onClick={() => setNavOpen(!navOpen)}>
+              <img
+                src={user}
+                alt="user Icon"
+                className={styles.icon}
+                loading="lazy"
+              />
+              <p className={styles.name}>{userInfo.username}</p>
+              <p className={navOpen ? styles.arrowOpen : styles.arrow}>
+                &#x5e;
+              </p>
+            </div>
+            {navOpen && (
+              <ul>
+                <li className={styles.link}>
+                  <Link to="/admin/feedback">Feedback</Link>
+                </li>
+                {userInfo.isAdmin && (
                   <li className={styles.link}>
-                    <Link to="/admin/feedback">Feedback</Link>
+                    <Link to="/admin/profiles">Users Dashboard</Link>
                   </li>
-                  {userInfo.isAdmin && (
-                    <li className={styles.link}>
-                      <Link to="/admin/profiles">Users Dashboard</Link>
-                    </li>
-                  )}
-                  <li className={styles.link}>
-                    <Link to="/profile">Profile</Link>
-                  </li>
-                  <li className={styles.link} onClick={logout}>
-                    Logout
-                  </li>
-                </ul>
-              )}
-            </nav>
-          ) : (
-            <nav>
-              <Link className={styles.link} to="/login">
-                <img
-                  src={user}
-                  alt="user Icon"
-                  className={styles.icon}
-                  loading="lazy"
-                />
-                Sign In
-              </Link>
-            </nav>
-          )}
-        </div>
+                )}
+                <li className={styles.link}>
+                  <Link to="/profile">Profile</Link>
+                </li>
+                <li className={styles.link} onClick={logout}>
+                  Logout
+                </li>
+              </ul>
+            )}
+          </nav>
+        ) : (
+          <nav>
+            <Link className={styles.link} to="/login">
+              <img
+                src={user}
+                alt="user Icon"
+                className={styles.icon}
+                loading="lazy"
+              />
+              Sign In
+            </Link>
+          </nav>
+        )}
       </div>
     </header>
   );
