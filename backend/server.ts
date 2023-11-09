@@ -18,7 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 
 //cookie parser middleware
 app.use(cookieParser());
-
 app.use(
   cors({
     origin: "*",
