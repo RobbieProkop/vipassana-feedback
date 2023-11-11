@@ -21,7 +21,7 @@ const Profile = () => {
   const [formData, setFormData] = useState<FormDataState>({
     username: userInfo.username,
     email: userInfo.email,
-    password: userInfo.password,
+    password: "",
     confirmPassword: "",
     isAdmin: userInfo.isAdmin,
   });
@@ -47,6 +47,14 @@ const Profile = () => {
         icon: "error",
         title: "Oops...",
         text: "All fields are required!",
+      });
+      return;
+    }
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Passwords do not match!",
       });
       return;
     }
@@ -132,7 +140,7 @@ const Profile = () => {
                   type="password"
                   name="confirmPassword"
                   placeholder="Confirm Password"
-                  value=""
+                  value={confirmPassword}
                   onChange={handleChange}
                 />
               </div>
