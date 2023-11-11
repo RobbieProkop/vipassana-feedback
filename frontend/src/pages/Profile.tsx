@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import styles from "../styles/feedbackForm.module.scss";
+import profile from "../styles/profile.module.scss";
 import axios from "axios";
 
 const Profile = () => {
@@ -14,6 +15,8 @@ const Profile = () => {
     confirmPassword?: string;
     isAdmin?: boolean;
   }
+
+  const [editProfile, setEditProfile] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<FormDataState>({
     username: userInfo.username,
@@ -36,12 +39,14 @@ const Profile = () => {
 
   const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const formFilled = [username, email].every((value) => value !== "");
+    const formFilled = [username, email, password, confirmPassword].every(
+      (value) => value !== ""
+    );
     if (!formFilled) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Username and Email are required!",
+        text: "All fields are required!",
       });
       return;
     }
@@ -63,55 +68,89 @@ const Profile = () => {
     <div className="container">
       <h1>Profile</h1>
 
-      <form>
-        <div className={styles.form}>
-          <div className={styles.contact}>
-            <div className={styles.formGroup}>
-              <label htmlFor="name">Username</label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={username}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Update Password"
-                value={password}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                value=""
-                onChange={handleChange}
-              />
+      {!editProfile && (
+        <div className={profile.profile}>
+          <div className={profile.profileGroup}>
+            <label htmlFor="name">Username</label>
+            <p>{username}</p>
+          </div>
+          <div className={profile.profileGroup}>
+            <label htmlFor="email">Email</label>
+            <p>{email}</p>
+          </div>
+          <div className={profile.profileGroup}>
+            <label htmlFor="password">Password</label>
+            <p>********</p>
+          </div>
+
+          <button
+            className="btn btn-block"
+            onClick={() => setEditProfile(true)}
+          >
+            Edit Profile
+          </button>
+        </div>
+      )}
+
+      {editProfile && (
+        <form>
+          <div className={styles.form}>
+            <div className={styles.contact}>
+              <div className={styles.formGroup}>
+                <label htmlFor="name">Username</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={username}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter Password"
+                  value={password}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value=""
+                  onChange={handleChange}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <button className="btn btn-block" onClick={onSubmit}>
-          Submit
-        </button>
-      </form>
+          <div className={profile.buttons}>
+            <button
+              className="btn  btn-cancel"
+              onClick={() => setEditProfile(false)}
+            >
+              Cancel
+            </button>
+            <button className="btn " onClick={onSubmit}>
+              Submit
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };

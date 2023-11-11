@@ -1,0 +1,26 @@
+@import "variables";
+
+.profile {
+  max-width: 800px;
+  margin: auto;
+
+  .profileGroup {
+    @include flex-between;
+    margin: 2rem 0;
+
+    label,
+    p {
+      font-size: 1.5rem;
+      margin: 0.5rem;
+    }
+  }
+}
+.buttons {
+  @include flex-between;
+  width: 100%;
+  max-width: 800px;
+
+  button {
+    width: 48%;
+  }
+}
