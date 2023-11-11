@@ -79,6 +79,9 @@ h1 {
   &-primary {
     background-color: $button;
   }
+  &-secondary {
+    background-color: $third;
+  }
   &:hover {
     opacity: 0.7;
   }

@@ -15,6 +15,11 @@
   .required {
     margin-bottom: 3rem;
   }
+
+  div {
+    width: 100%;
+    max-width: 800px;
+  }
   .formGroup {
     display: flex;
     flex-direction: column;

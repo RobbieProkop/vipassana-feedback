@@ -17,6 +17,7 @@ const Profile = () => {
   }
 
   const [editProfile, setEditProfile] = useState<boolean>(false);
+  const [editPassword, setEditPassword] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<FormDataState>({
     username: userInfo.username,
@@ -39,7 +40,32 @@ const Profile = () => {
 
   const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const formFilled = [username, email, password, confirmPassword].every(
+    const formFilled = [username, email].every((value) => value !== "");
+    if (!formFilled) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "All fields are required!",
+      });
+      return;
+    }
+
+    try {
+      const res = await axios.put("/api/users/profile", formData);
+      console.log("res :>> ", res);
+    } catch (error) {
+      console.log("error :>> ", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    }
+  };
+
+  const onSubmitPassword = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const formFilled = [password, confirmPassword].every(
       (value) => value !== ""
     );
     if (!formFilled) {
@@ -76,7 +102,7 @@ const Profile = () => {
     <div className="container">
       <h1>Profile</h1>
 
-      {!editProfile && (
+      {!editProfile && !editPassword && (
         <div className={profile.profile}>
           <div className={profile.profileGroup}>
             <label htmlFor="name">Username</label>
@@ -90,13 +116,21 @@ const Profile = () => {
             <label htmlFor="password">Password</label>
             <p>********</p>
           </div>
+          <div className={profile.buttons}>
+            <button
+              className="btn  btn-primary"
+              onClick={() => setEditPassword(true)}
+            >
+              Update Password
+            </button>
 
-          <button
-            className="btn btn-block"
-            onClick={() => setEditProfile(true)}
-          >
-            Edit Profile
-          </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setEditProfile(true)}
+            >
+              Edit Profile
+            </button>
+          </div>
         </div>
       )}
 
@@ -124,6 +158,25 @@ const Profile = () => {
                   onChange={handleChange}
                 />
               </div>
+            </div>
+            <div className={profile.buttons}>
+              <button
+                className="btn  btn-cancel"
+                onClick={() => setEditProfile(false)}
+              >
+                Cancel
+              </button>
+              <button className="btn " onClick={onSubmit}>
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      )}
+      {editPassword && (
+        <form>
+          <div className={styles.form}>
+            <div className={styles.contact}>
               <div className={styles.formGroup}>
                 <label htmlFor="password">Password</label>
                 <input
@@ -149,11 +202,11 @@ const Profile = () => {
           <div className={profile.buttons}>
             <button
               className="btn  btn-cancel"
-              onClick={() => setEditProfile(false)}
+              onClick={() => setEditPassword(false)}
             >
               Cancel
             </button>
-            <button className="btn " onClick={onSubmit}>
+            <button className="btn " onClick={onSubmitPassword}>
               Submit
             </button>
           </div>
