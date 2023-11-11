@@ -1,12 +1,14 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 import styles from "../styles/feedbackForm.module.scss";
+import axios from "axios";
 
 const Profile = () => {
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
   interface FormDataState {
-    name?: string;
+    username?: string;
     email?: string;
     password?: string;
     confirmPassword?: string;
@@ -14,13 +16,14 @@ const Profile = () => {
   }
 
   const [formData, setFormData] = useState<FormDataState>({
-    name: userInfo.name,
+    username: userInfo.username,
     email: userInfo.email,
-    password: "",
+    password: userInfo.password,
     confirmPassword: "",
+    isAdmin: userInfo.isAdmin,
   });
 
-  const { name, email, password, confirmPassword } = formData;
+  const { username, email, password, confirmPassword } = formData;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,6 +34,31 @@ const Profile = () => {
     }));
   };
 
+  const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const formFilled = [username, email].every((value) => value !== "");
+    if (!formFilled) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Username and Email are required!",
+      });
+      return;
+    }
+
+    try {
+      const res = await axios.put("/api/users/profile", formData);
+      console.log("res :>> ", res);
+    } catch (error) {
+      console.log("error :>> ", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    }
+  };
+
   return (
     <div className="container">
       <h1>Profile</h1>
@@ -39,17 +67,17 @@ const Profile = () => {
         <div className={styles.form}>
           <div className={styles.contact}>
             <div className={styles.formGroup}>
-              <label htmlFor="name">Name (optional)</label>
+              <label htmlFor="name">Username</label>
               <input
                 type="text"
                 name="name"
                 placeholder="Name"
-                value={name}
+                value={username}
                 onChange={handleChange}
               />
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor="email">Email (optional)</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 name="email"
@@ -58,8 +86,31 @@ const Profile = () => {
                 onChange={handleChange}
               />
             </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Update Password"
+                value={password}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value=""
+                onChange={handleChange}
+              />
+            </div>
           </div>
         </div>
+        <button className="btn btn-block" onClick={onSubmit}>
+          Submit
+        </button>
       </form>
     </div>
   );

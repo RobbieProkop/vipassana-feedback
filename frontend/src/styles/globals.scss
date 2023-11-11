@@ -48,6 +48,11 @@ ul {
   list-style: none;
 }
 
+h1 {
+  text-align: center;
+  margin-top: 3rem;
+}
+
 .container {
   max-width: $container-width;
   margin: 0 auto;
@@ -90,7 +95,14 @@ ul {
   }
   &-block {
     width: 100%;
+    max-width: 800px;
+    margin: 1rem auto;
   }
+}
+
+form {
+  @include flex-center;
+  flex-direction: column;
 }
 
 .flex-center {
