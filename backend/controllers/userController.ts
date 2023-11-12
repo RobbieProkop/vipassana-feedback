@@ -84,7 +84,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json(userResponse(user));
 });
 
-// DESC: update user profile (password & username)
+// DESC: update user profile (username & email)
 // Route: PUT /api/users/profile
 // Access: Private
 const updateUserProfile = asyncHandler(async (req, res) => {
@@ -92,31 +92,35 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
   if (!user) return throwError(res, 404, "User not found");
 
-  const { username, email, prevPassword, newPassword } = req.body;
+  const { username, email } = req.body;
   if (username.includes(" "))
     return throwError(res, 400, "Username cannot contain spaces");
 
   user.username = username || user.username;
   user.email = email || user.email;
 
-  if (prevPassword && newPassword) {
-    if (prevPassword !== newPassword) {
-      return throwError(res, 400, "Passwords do not match");
-    }
-
-    const isPasswordUpdated = await updateUserPassword(
-      user,
-      prevPassword,
-      newPassword
-    );
-
-    if (!isPasswordUpdated) return throwError(res, 401, "Invalid credentials");
-  }
-
   // //check if username or email exists
-  // const userExists = await User.findOne({ where: { username } });
-  // if (userExists) return throwError(res, 400, "User already exists");
+  const userExists = await User.findOne({ where: { username } });
+  if (userExists) return throwError(res, 400, "User already exists");
 
+  await user.save();
+  generateToken(res, user.id);
+  res.status(200).json(userResponse(user));
+});
+
+// DESC: update user password
+// Route: PUT /api/users/pass
+// Access: Private
+const updatePassword = asyncHandler(async (req, res) => {
+  const user = await User.findByPk(req.user.id);
+
+  if (!user) return throwError(res, 404, "User not found");
+
+  const { prevPassword, newPassword } = req.body;
+
+  if (prevPassword && newPassword) {
+    await updateUserPassword(user, prevPassword, newPassword);
+  }
   await user.save();
   generateToken(res, user.id);
   res.status(200).json(userResponse(user));
@@ -180,6 +184,7 @@ export {
   registerUser,
   logoutUser,
   updateUserProfile,
+  updatePassword,
   getAllUsers,
   getUserById,
   updateUser,

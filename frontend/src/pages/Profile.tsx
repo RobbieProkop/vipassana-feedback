@@ -12,6 +12,7 @@ const Profile = () => {
     username?: string;
     email?: string;
     password?: string;
+    newPassword?: string;
     confirmPassword?: string;
     isAdmin?: boolean;
   }
@@ -23,11 +24,12 @@ const Profile = () => {
     username: userInfo.username,
     email: userInfo.email,
     password: "",
+    newPassword: "",
     confirmPassword: "",
     isAdmin: userInfo.isAdmin,
   });
 
-  const { username, email, password, confirmPassword } = formData;
+  const { username, email, password, newPassword, confirmPassword } = formData;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -178,11 +180,21 @@ const Profile = () => {
           <div className={styles.form}>
             <div className={styles.contact}>
               <div className={styles.formGroup}>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Previous Password</label>
                 <input
                   type="password"
                   name="password"
-                  placeholder="Enter Password"
+                  placeholder="Enter Previous Password"
+                  value={password}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="password">New Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter New Password"
                   value={password}
                   onChange={handleChange}
                 />
