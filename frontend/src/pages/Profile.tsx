@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import styles from "../styles/feedbackForm.module.scss";
 import profile from "../styles/profile.module.scss";
 import axios from "axios";
+import { USERS_URL } from "../constants";
 
 const Profile = () => {
   const userInfo = localStorage.getItem("userInfo")
@@ -11,7 +12,7 @@ const Profile = () => {
   interface FormDataState {
     username?: string;
     email?: string;
-    password?: string;
+    prevPassword?: string;
     newPassword?: string;
     confirmPassword?: string;
     isAdmin?: boolean;
@@ -23,13 +24,14 @@ const Profile = () => {
   const [formData, setFormData] = useState<FormDataState>({
     username: userInfo.username,
     email: userInfo.email,
-    password: "",
+    prevPassword: "",
     newPassword: "",
     confirmPassword: "",
     isAdmin: userInfo.isAdmin,
   });
 
-  const { username, email, password, newPassword, confirmPassword } = formData;
+  const { username, email, prevPassword, newPassword, confirmPassword } =
+    formData;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -67,7 +69,7 @@ const Profile = () => {
 
   const onSubmitPassword = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const formFilled = [password, confirmPassword].every(
+    const formFilled = [prevPassword, newPassword, confirmPassword].every(
       (value) => value !== ""
     );
     if (!formFilled) {
@@ -78,7 +80,7 @@ const Profile = () => {
       });
       return;
     }
-    if (password !== confirmPassword) {
+    if (newPassword !== confirmPassword) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -88,7 +90,9 @@ const Profile = () => {
     }
 
     try {
-      const res = await axios.put("/api/users/profile", formData);
+      const res = await axios.put(`${USERS_URL}/pass`, formData, {
+        withCredentials: true,
+      });
       console.log("res :>> ", res);
     } catch (error) {
       console.log("error :>> ", error);
@@ -183,9 +187,9 @@ const Profile = () => {
                 <label htmlFor="password">Previous Password</label>
                 <input
                   type="password"
-                  name="password"
+                  name="prevPassword"
                   placeholder="Enter Previous Password"
-                  value={password}
+                  value={prevPassword}
                   onChange={handleChange}
                 />
               </div>
@@ -193,9 +197,9 @@ const Profile = () => {
                 <label htmlFor="password">New Password</label>
                 <input
                   type="password"
-                  name="password"
+                  name="newPassword"
                   placeholder="Enter New Password"
-                  value={password}
+                  value={newPassword}
                   onChange={handleChange}
                 />
               </div>

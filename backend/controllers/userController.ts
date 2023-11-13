@@ -26,6 +26,7 @@ const loginUser = asyncHandler(async (req, res) => {
   if (!isMatch) return throwError(res, 401, "Invalid credentials");
 
   generateToken(res, user.id);
+  console.log("token :>> ", res);
   res.status(200).json(userResponse(user));
 });
 
@@ -117,12 +118,14 @@ const updatePassword = asyncHandler(async (req, res) => {
   if (!user) return throwError(res, 404, "User not found");
 
   const { prevPassword, newPassword } = req.body;
+  if (!prevPassword || !newPassword)
+    return throwError(res, 400, "Please fill in all fields");
 
-  if (prevPassword && newPassword) {
-    await updateUserPassword(user, prevPassword, newPassword);
-  }
+  await updateUserPassword(user, prevPassword, newPassword);
+
   await user.save();
   generateToken(res, user.id);
+  console.log("password", user.password);
   res.status(200).json(userResponse(user));
 });
 
