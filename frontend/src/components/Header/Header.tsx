@@ -56,11 +56,14 @@ const Header: FC<HeaderProps> = ({ navOpen, setNavOpen }) => {
             {navOpen && (
               <ul>
                 <li className={styles.link}>
-                  <Link to="/admin/feedback">Feedback</Link>
+                  <Link to="/">Home</Link>
+                </li>
+                <li className={styles.link}>
+                  <Link to="/admin/feedback">Dashboard</Link>
                 </li>
                 {userInfo.isAdmin && (
                   <li className={styles.link}>
-                    <Link to="/admin/profiles">Users Dashboard</Link>
+                    <Link to="/admin/profiles">Users</Link>
                   </li>
                 )}
                 <li className={styles.link}>
