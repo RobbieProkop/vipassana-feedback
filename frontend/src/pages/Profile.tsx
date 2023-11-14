@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import styles from "../styles/feedbackForm.module.scss";
 import profile from "../styles/profile.module.scss";
 import axios from "axios";
 import { USERS_URL } from "../constants";
+import { useNavigate } from "react-router-dom";
+import ErrorPage from "./ErrorPage";
 
 const Profile = () => {
+  const navigate = useNavigate();
+
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, []);
+  if (!userInfo) {
+    return <ErrorPage />;
+  }
+
   interface FormDataState {
     username?: string;
     email?: string;
