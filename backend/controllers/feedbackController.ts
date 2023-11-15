@@ -36,9 +36,12 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 //access: Private
 const getFeedbackForDate = asyncHandler(async (req, res) => {
   const today = new Date().toISOString().slice(0, 10);
-  const { startDate, endDate = today } = req.query;
+  const { endDate = today } = req.query;
+
+  const startDate = req.query.startDate || today;
 
   if (!startDate) {
+    console.log(req.query);
     return res.status(400).json({ message: "Start date is required" });
   }
   const feedback = await sequelize.query(
