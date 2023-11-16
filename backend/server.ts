@@ -26,10 +26,11 @@ app.use(
 );
 
 //this is an example of a route handler to spin up the server
-app.get("/heartbeat", async (req, res) => {
+app.get("/api/heartbeat", async (req, res) => {
   try {
-    const result = await pool.query("SELECT NOW()");
-    res.json(result.rows[0]);
+    // const result = await pool.query("SELECT NOW()");
+    // res.json(result.rows[0]);
+    res.json({ message: "Server heartbeat" });
   } catch (error) {
     console.log("error :>> ", error);
     res.status(500).json({ error: "Something went wrong" });

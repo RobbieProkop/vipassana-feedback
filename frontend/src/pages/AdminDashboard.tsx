@@ -11,6 +11,7 @@ const AdminDashboard = () => {
     : null;
 
   let feedback;
+
   useEffect(() => {
     if (!userInfo) {
       navigate("/");
@@ -18,12 +19,12 @@ const AdminDashboard = () => {
 
     axios.get("/api/feedback").then((res) => {
       feedback = res.data;
-      console.log(feedback);
+      console.log("feedback", feedback);
     });
   }, []);
   if (!userInfo) {
     return <ErrorPage />;
   }
-  return <div>AdminDashboard</div>;
+  return <div>Hi</div>;
 };
 export default AdminDashboard;

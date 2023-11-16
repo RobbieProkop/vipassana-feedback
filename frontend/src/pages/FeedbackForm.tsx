@@ -7,10 +7,10 @@ const FeedbackForm = () => {
   const today = new Date();
 
   interface Question5State {
-    "question5-1": string;
-    "question5-2": string;
-    "question5-3": string;
-    "question5-4": string;
+    "q5-1": string;
+    "q5-2": string;
+    "q5-3": string;
+    "q5-4": string;
   }
 
   interface FormDataState {
@@ -18,11 +18,11 @@ const FeedbackForm = () => {
     email: string;
     courseStart: string;
     daysServed: number;
-    question1: string;
-    question2: string;
-    question3: string;
-    question4: string;
-    question5: Question5State;
+    q1: string;
+    q2: string;
+    q3: string;
+    q4: string;
+    q5: Question5State;
     additional: string;
   }
 
@@ -31,41 +31,31 @@ const FeedbackForm = () => {
     email: "",
     courseStart: "",
     daysServed: 0,
-    question1: "",
-    question2: "",
-    question3: "",
-    question4: "",
-    question5: {
-      "question5-1": "",
-      "question5-2": "",
-      "question5-3": "",
-      "question5-4": "",
+    q1: "",
+    q2: "",
+    q3: "",
+    q4: "",
+    q5: {
+      "q5-1": "",
+      "q5-2": "",
+      "q5-3": "",
+      "q5-4": "",
     },
     additional: "",
   });
 
-  const {
-    name,
-    email,
-    courseStart,
-    daysServed,
-    question1,
-    question2,
-    question3,
-    question4,
-    question5,
-  } = formData;
+  const { name, email, courseStart, daysServed, q1, q2, q3, q4, q5 } = formData;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
 
-    if (name.startsWith("question5")) {
+    if (name.startsWith("q5")) {
       setFormData((prevState) => ({
         ...prevState,
-        question5: {
-          ...prevState.question5,
+        q5: {
+          ...prevState.q5,
           [name]: value,
         },
       }));
@@ -78,15 +68,10 @@ const FeedbackForm = () => {
   };
   const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const formFilled = [
-      courseStart,
-      daysServed,
-      question1,
-      question2,
-      question3,
-      question4,
-    ].every((value) => value !== "");
-    const q5Selected = Object.values(question5).every((value) => value !== "");
+    const formFilled = [courseStart, daysServed, q1, q2, q3, q4].every(
+      (value) => value !== ""
+    );
+    const q5Selected = Object.values(q5).every((value) => value !== "");
 
     if (!formFilled || !q5Selected) {
       Swal.fire({
@@ -97,8 +82,11 @@ const FeedbackForm = () => {
       return;
     }
 
-    const res = await axios.post("/api/feedback", formData);
-    console.log("res :>> ", res);
+    const res = await axios.post(
+      "http://localhost:8080/api/feedback",
+      formData
+    );
+    console.log("form submit res :>> ", res);
   };
 
   return (
@@ -150,54 +138,32 @@ const FeedbackForm = () => {
           </div>
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="question1">
+          <label htmlFor="q1">
             1. What was your motivation for coming to serve? *
           </label>
-          <textarea
-            rows={10}
-            name="question1"
-            value={question1}
-            onChange={handleChange}
-          />
+          <textarea rows={10} name="q1" value={q1} onChange={handleChange} />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="question2">
-            2. Did you feel valued as a server? *
-          </label>
-          <textarea
-            rows={10}
-            name="question2"
-            value={question2}
-            onChange={handleChange}
-          />
+          <label htmlFor="q2">2. Did you feel valued as a server? *</label>
+          <textarea rows={10} name="q2" value={q2} onChange={handleChange} />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="question3">
+          <label htmlFor="q3">
             3. Are you against returning to Dhamma Karuna to serve again if your
             time and resources permit? *
           </label>
           <p>If yes, please tell us why.</p>
-          <textarea
-            rows={10}
-            name="question3"
-            value={question3}
-            onChange={handleChange}
-          />
+          <textarea rows={10} name="q3" value={q3} onChange={handleChange} />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="question4">
+          <label htmlFor="q4">
             4. What prevents you from serving more frequently? *
           </label>
 
-          <textarea
-            rows={10}
-            name="question4"
-            value={question4}
-            onChange={handleChange}
-          />
+          <textarea rows={10} name="q4" value={q4} onChange={handleChange} />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="question5" className={styles.ratings}>
+          <label htmlFor="q5" className={styles.ratings}>
             5. Please rate your overall experience in the following:{" "}
             <span>0-Poor 5-Exceptional</span>
           </label>
@@ -207,9 +173,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-1"
+                name="q5-1"
                 value="1"
-                checked={question5["question5-1"] === "1"}
+                checked={q5["q5-1"] === "1"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio1">
@@ -220,9 +186,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-1"
+                name="q5-1"
                 value="2"
-                checked={question5["question5-1"] === "2"}
+                checked={q5["q5-1"] === "2"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio2">
@@ -234,9 +200,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-1"
+                name="q5-1"
                 value="3"
-                checked={question5["question5-1"] === "3"}
+                checked={q5["q5-1"] === "3"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio3">
@@ -248,9 +214,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-1"
+                name="q5-1"
                 value="4"
-                checked={question5["question5-1"] === "4"}
+                checked={q5["q5-1"] === "4"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio4">
@@ -262,9 +228,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-1"
+                name="q5-1"
                 value="5"
-                checked={question5["question5-1"] === "5"}
+                checked={q5["q5-1"] === "5"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio5">
@@ -281,9 +247,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-2"
+                name="q5-2"
                 value="1"
-                checked={question5["question5-2"] === "1"}
+                checked={q5["q5-2"] === "1"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio1">
@@ -294,9 +260,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-2"
+                name="q5-2"
                 value="2"
-                checked={question5["question5-2"] === "2"}
+                checked={q5["q5-2"] === "2"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio2">
@@ -308,9 +274,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-2"
+                name="q5-2"
                 value="3"
-                checked={question5["question5-2"] === "3"}
+                checked={q5["q5-2"] === "3"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio3">
@@ -322,9 +288,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-2"
+                name="q5-2"
                 value="4"
-                checked={question5["question5-2"] === "4"}
+                checked={q5["q5-2"] === "4"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio4">
@@ -336,9 +302,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-2"
+                name="q5-2"
                 value="5"
-                checked={question5["question5-2"] === "5"}
+                checked={q5["q5-2"] === "5"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio5">
@@ -353,9 +319,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-3"
+                name="q5-3"
                 value="1"
-                checked={question5["question5-3"] === "1"}
+                checked={q5["q5-3"] === "1"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio1">
@@ -366,9 +332,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-3"
+                name="q5-3"
                 value="2"
-                checked={question5["question5-3"] === "2"}
+                checked={q5["q5-3"] === "2"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio2">
@@ -380,9 +346,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-3"
+                name="q5-3"
                 value="3"
-                checked={question5["question5-3"] === "3"}
+                checked={q5["q5-3"] === "3"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio3">
@@ -394,9 +360,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-3"
+                name="q5-3"
                 value="4"
-                checked={question5["question5-3"] === "4"}
+                checked={q5["q5-3"] === "4"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio4">
@@ -408,9 +374,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-3"
+                name="q5-3"
                 value="5"
-                checked={question5["question5-3"] === "5"}
+                checked={q5["q5-3"] === "5"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio5">
@@ -424,9 +390,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-4"
+                name="q5-4"
                 value="1"
-                checked={question5["question5-4"] === "1"}
+                checked={q5["q5-4"] === "1"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio1">
@@ -437,9 +403,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-4"
+                name="q5-4"
                 value="2"
-                checked={question5["question5-4"] === "2"}
+                checked={q5["q5-4"] === "2"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio2">
@@ -451,9 +417,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-4"
+                name="q5-4"
                 value="3"
-                checked={question5["question5-4"] === "3"}
+                checked={q5["q5-4"] === "3"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio3">
@@ -465,9 +431,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-4"
+                name="q5-4"
                 value="4"
-                checked={question5["question5-4"] === "4"}
+                checked={q5["q5-4"] === "4"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio4">
@@ -479,9 +445,9 @@ const FeedbackForm = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name="question5-4"
+                name="q5-4"
                 value="5"
-                checked={question5["question5-4"] === "5"}
+                checked={q5["q5-4"] === "5"}
                 onChange={handleChange}
               />
               <label className="form-check-label" htmlFor="inlineRadio5">

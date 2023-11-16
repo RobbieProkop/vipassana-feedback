@@ -38,7 +38,7 @@ const getFeedbackForDate = asyncHandler(async (req, res) => {
   const today = new Date().toISOString().slice(0, 10);
   const { endDate = today } = req.query;
 
-  const startDate = req.query.startDate || today;
+  const startDate = req.query.startDate;
 
   if (!startDate) {
     console.log(req.query);
@@ -88,38 +88,51 @@ const getFeedbackById = asyncHandler(async (req, res) => {
 const submitFeedback = asyncHandler(async (req, res) => {
   const data = await sequelize.query(
     `INSERT INTO feedback (
-      name = :name, 
-      email = :email, 
-      course_start_date = :course_start_date, 
-      days_served = :days_served, 
-      question1 = :question1, 
-      question2 = :question2, 
-      question3 = :question3,
-      question4 = :question4,
-      question5_1 = :question5_1, 
-      question5_2 = :question5_2,
-      question5_3 = :question5_3,
-      question5_4 = :question5_4,
-      additional_info = :additional_info
-  )
-  `,
+      name,
+      email,
+      course_start_date,
+      days_served,
+      q1,
+      q2,
+      q3,
+      q4,
+      q5_1,
+      q5_2,
+      q5_3,
+      q5_4,
+      additional_info
+    ) VALUES (
+      :name,
+      :email,
+      :course_start_date,
+      :days_served,
+      :q1,
+      :q2,
+      :q3,
+      :q4,
+      :q5_1,
+      :q5_2,
+      :q5_3,
+      :q5_4,
+      :additional_info
+    )`,
     {
       raw: true,
-      type: QueryTypes.SELECT,
+      type: QueryTypes.INSERT,
       replacements: {
-        name: req.body.name,
-        email: req.body.email,
+        name: req.body.name || null,
+        email: req.body.email || null,
         course_start_date: req.body.course_start_date,
         days_served: req.body.days_served,
-        question1: req.body.question1,
-        question2: req.body.question2,
-        question3: req.body.question3,
-        question4: req.body.question4,
-        question5_1: req.body.question5_1,
-        question5_2: req.body.question5_2,
-        question5_3: req.body.question5_3,
-        question5_4: req.body.question5_4,
-        additional_info: req.body.additional_info,
+        q1: req.body.q1,
+        q2: req.body.q2,
+        q3: req.body.q3,
+        q4: req.body.q4,
+        q5_1: req.body.q5_1,
+        q5_2: req.body.q5_2,
+        q5_3: req.body.q5_3,
+        q5_4: req.body.q5_4,
+        additional_info: req.body.additional_info || null,
       },
     }
   );
