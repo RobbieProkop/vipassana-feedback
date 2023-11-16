@@ -46,7 +46,7 @@ const getFeedbackForDate = asyncHandler(async (req, res) => {
   }
   const feedback = await sequelize.query(
     `SELECT * FROM Feedback
-    WHERE submitted_at BETWEEN :startDate AND :endDate
+    WHERE CAST(submitted_at as DATE) BETWEEN :startDate AND :endDate
   ORDER BY id DESC;`,
     {
       raw: true,
