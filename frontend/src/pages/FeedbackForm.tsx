@@ -7,10 +7,10 @@ const FeedbackForm = () => {
   const today = new Date();
 
   interface Question5State {
-    "q5-1": string;
-    "q5-2": string;
-    "q5-3": string;
-    "q5-4": string;
+    q5_1: string;
+    q5_2: string;
+    q5_3: string;
+    q5_4: string;
   }
 
   interface FormDataState {
@@ -36,10 +36,10 @@ const FeedbackForm = () => {
     q3: "",
     q4: "",
     q5: {
-      "q5-1": "",
-      "q5-2": "",
-      "q5-3": "",
-      "q5-4": "",
+      q5_1: "",
+      q5_2: "",
+      q5_3: "",
+      q5_4: "",
     },
     additional: "",
   });
@@ -168,291 +168,251 @@ const FeedbackForm = () => {
             <span>0-Poor 5-Exceptional</span>
           </label>
           <div className={styles.formGroupCheck}>
-            <label htmlFor="Q5-1">- How well were you onboarded? *</label>
+            <label>- How well were you onboarded? *</label>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-1"
+                name="q5_1"
                 value="1"
-                checked={q5["q5-1"] === "1"}
+                checked={q5["q5_1"] === "1"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio1">
-                1
-              </label>
+              <label className="form-check-label">1</label>
             </div>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-1"
+                name="q5_1"
                 value="2"
-                checked={q5["q5-1"] === "2"}
+                checked={q5["q5_1"] === "2"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio2">
-                2
-              </label>
+              <label className="form-check-label">2</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-1"
+                name="q5_1"
                 value="3"
-                checked={q5["q5-1"] === "3"}
+                checked={q5["q5_1"] === "3"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio3">
-                3
-              </label>
+              <label className="form-check-label">3</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-1"
+                name="q5_1"
                 value="4"
-                checked={q5["q5-1"] === "4"}
+                checked={q5["q5_1"] === "4"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio4">
-                4
-              </label>
+              <label className="form-check-label">4</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-1"
+                name="q5_1"
                 value="5"
-                checked={q5["q5-1"] === "5"}
+                checked={q5["q5_1"] === "5"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio5">
-                5
-              </label>
+              <label className="form-check-label">5</label>
             </div>
           </div>
 
           <div className={styles.formGroupCheck}>
-            <label htmlFor="Q5-2">
+            <label>
               - Availability of required resources (tools, material etc.) *
             </label>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-2"
+                name="q5_2"
                 value="1"
-                checked={q5["q5-2"] === "1"}
+                checked={q5["q5_2"] === "1"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio1">
-                1
-              </label>
+              <label className="form-check-label">1</label>
             </div>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-2"
+                name="q5_2"
                 value="2"
-                checked={q5["q5-2"] === "2"}
+                checked={q5["q5_2"] === "2"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio2">
-                2
-              </label>
+              <label className="form-check-label">2</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-2"
+                name="q5_2"
                 value="3"
-                checked={q5["q5-2"] === "3"}
+                checked={q5["q5_2"] === "3"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio3">
-                3
-              </label>
+              <label className="form-check-label">3</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-2"
+                name="q5_2"
                 value="4"
-                checked={q5["q5-2"] === "4"}
+                checked={q5["q5_2"] === "4"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio4">
-                4
-              </label>
+              <label className="form-check-label">4</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-2"
+                name="q5_2"
                 value="5"
-                checked={q5["q5-2"] === "5"}
+                checked={q5["q5_2"] === "5"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio5">
-                5
-              </label>
+              <label className="form-check-label">5</label>
             </div>
           </div>
 
           <div className={styles.formGroupCheck}>
-            <label htmlFor="Q5-3">- How was the food? *</label>
+            <label>- How was the food? *</label>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-3"
+                name="q5_3"
                 value="1"
-                checked={q5["q5-3"] === "1"}
+                checked={q5["q5_3"] === "1"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio1">
-                1
-              </label>
+              <label className="form-check-label">1</label>
             </div>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-3"
+                name="q5_3"
                 value="2"
-                checked={q5["q5-3"] === "2"}
+                checked={q5["q5_3"] === "2"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio2">
-                2
-              </label>
+              <label className="form-check-label">2</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-3"
+                name="q5_3"
                 value="3"
-                checked={q5["q5-3"] === "3"}
+                checked={q5["q5_3"] === "3"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio3">
-                3
-              </label>
+              <label className="form-check-label">3</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-3"
+                name="q5_3"
                 value="4"
-                checked={q5["q5-3"] === "4"}
+                checked={q5["q5_3"] === "4"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio4">
-                4
-              </label>
+              <label className="form-check-label">4</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-3"
+                name="q5_3"
                 value="5"
-                checked={q5["q5-3"] === "5"}
+                checked={q5["q5_3"] === "5"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio5">
-                5
-              </label>
+              <label className="form-check-label">5</label>
             </div>
           </div>
           <div className={styles.formGroupCheck}>
-            <label htmlFor="Q5-4">- Your overall experience *</label>
+            <label>- Your overall experience *</label>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-4"
+                name="q5_4"
                 value="1"
-                checked={q5["q5-4"] === "1"}
+                checked={q5["q5_4"] === "1"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio1">
-                1
-              </label>
+              <label className="form-check-label">1</label>
             </div>
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-4"
+                name="q5_4"
                 value="2"
-                checked={q5["q5-4"] === "2"}
+                checked={q5["q5_4"] === "2"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio2">
-                2
-              </label>
+              <label className="form-check-label">2</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-4"
+                name="q5_4"
                 value="3"
-                checked={q5["q5-4"] === "3"}
+                checked={q5["q5_4"] === "3"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio3">
-                3
-              </label>
+              <label className="form-check-label">3</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-4"
+                name="q5_4"
                 value="4"
-                checked={q5["q5-4"] === "4"}
+                checked={q5["q5_4"] === "4"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio4">
-                4
-              </label>
+              <label className="form-check-label">4</label>
             </div>
 
             <div className={styles.formCheck}>
               <input
                 className="form-check-input"
                 type="radio"
-                name="q5-4"
+                name="q5_4"
                 value="5"
-                checked={q5["q5-4"] === "5"}
+                checked={q5["q5_4"] === "5"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" htmlFor="inlineRadio5">
-                5
-              </label>
+              <label className="form-check-label">5</label>
             </div>
           </div>
         </div>
