@@ -86,7 +86,37 @@ const getFeedbackById = asyncHandler(async (req, res) => {
 //Route: POST /api/feedback
 //access: Private
 const submitFeedback = asyncHandler(async (req, res) => {
-  console.log("req.body :>> ", req.body);
+  const {
+    name,
+    email,
+    courseStart,
+    daysServed,
+    q1,
+    q2,
+    q3,
+    q4,
+    q5,
+    additional,
+  } = req.body;
+
+  const { q5_1, q5_2, q5_3, q5_4 } = q5;
+
+  if (
+    !courseStart ||
+    !daysServed ||
+    !q1 ||
+    !q2 ||
+    !q3 ||
+    !q4 ||
+    !q5_1 ||
+    !q5_2 ||
+    !q5_3 ||
+    !q5_4
+  ) {
+    console.log("uh oh, missing info");
+    res.status(400).json({ error: "Please fill in all required fields" });
+    return;
+  }
   try {
     const data = await sequelize.query(
       `INSERT INTO feedback (
@@ -122,32 +152,31 @@ const submitFeedback = asyncHandler(async (req, res) => {
         raw: true,
         type: QueryTypes.INSERT,
         replacements: {
-          name: req.body.name || null,
-          email: req.body.email || null,
-          course_start_date: req.body.courseStart,
-          days_served: req.body.daysServed,
-          q1: req.body.q1,
-          q2: req.body.q2,
-          q3: req.body.q3,
-          q4: req.body.q4,
-          q5_1: req.body.q5.q5_1,
-          q5_2: req.body.q5.q5_2,
-          q5_3: req.body.q5.q5_3,
-          q5_4: req.body.q5.q5_4,
-          additional_info: req.body.additional || null,
+          name: name || null,
+          email: email || null,
+          course_start_date: courseStart,
+          days_served: daysServed,
+          q1: q1,
+          q2: q2,
+          q3: q3,
+          q4: q4,
+          q5_1: q5_1,
+          q5_2: q5_2,
+          q5_3: q5_3,
+          q5_4: q5_4,
+          additional_info: additional || null,
         },
       }
     );
+
+    if (!data) {
+      res.status(400);
+      throw new Error("Error Submitting Feedback");
+    }
   } catch (err) {
     console.log("err :>> ", err);
     res.json({ error: "Something went wrong", err });
   }
-
-  // console.log("data :>> ", data);
-  // if (!data) {
-  //   res.status(400);
-  //   throw new Error("Error Submitting Feedback");
-  // }
   res.status(200).json({ message: "Feedback submitted successfully" });
 });
 
