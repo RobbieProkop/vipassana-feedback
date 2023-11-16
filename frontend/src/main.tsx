@@ -11,17 +11,19 @@ import {
 
 import Home from "./pages/Home";
 import FeedbackForm from "./pages/FeedbackForm";
+import Thankyou from "./pages/thankyou";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminFeedbackForm from "./pages/AdminFeedbackForm";
-import ErrorPage from "./pages/ErrorPage.tsx";
 import Profile from "./pages/Profile.tsx";
+import ErrorPage from "./pages/ErrorPage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Home />} />
       <Route path="/feedback" element={<FeedbackForm />} />
+      <Route path="/feedback/thankyou" element={<Thankyou />} />
       <Route path="/login" element={<AdminLogin />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/admin/feedback" element={<AdminDashboard />} />
