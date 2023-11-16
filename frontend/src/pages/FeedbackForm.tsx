@@ -2,8 +2,10 @@ import { useState } from "react";
 import styles from "../styles/feedbackForm.module.scss";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FeedbackForm = () => {
+  const navigate = useNavigate();
   const today = new Date();
 
   interface Question5State {
@@ -86,7 +88,7 @@ const FeedbackForm = () => {
       "http://localhost:8080/api/feedback",
       formData
     );
-    console.log("form submit res :>> ", res);
+    navigate("/feedback/thankyou");
   };
 
   return (

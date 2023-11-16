@@ -113,7 +113,6 @@ const submitFeedback = asyncHandler(async (req, res) => {
     !q5_3 ||
     !q5_4
   ) {
-    console.log("uh oh, missing info");
     res.status(400).json({ error: "Please fill in all required fields" });
     return;
   }
