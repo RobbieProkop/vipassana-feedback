@@ -10,7 +10,7 @@ const Card: React.FC<{ feedback: Feedback }> = ({ feedback }) => {
 
   return (
     <div className={styles.feedbackCard}>
-      <Link to={`/admin/feedback/${feedback.id}`} className={styles.link}>
+      <Link to={`/feedback/${feedback.id}`} className={styles.link}>
         <p>ID: {id}</p>
         <h2>Name: {name || "Anonymous"}</h2>
         <h3>Course Start: {course_start_date}</h3>

@@ -26,8 +26,8 @@ const router = createBrowserRouter(
       <Route path="/feedback/thankyou" element={<Thankyou />} />
       <Route path="/login" element={<AdminLogin />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/admin/feedback" element={<AdminDashboard />} />
-      <Route path="/admin/feedback/:id" element={<AdminFeedbackForm />} />
+      <Route path="/feedbackDashboard" element={<AdminDashboard />} />
+      <Route path="/feedback/:id" element={<AdminFeedbackForm />} />
       <Route path="*" element={<ErrorPage />} />
     </Route>
   )
