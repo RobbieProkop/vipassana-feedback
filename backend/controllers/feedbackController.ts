@@ -36,10 +36,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 //access: Private
 const getFeedbackForDate = asyncHandler(async (req, res) => {
   const { startDate, endDate } = req.query;
-  // const startDate = req.query.startDate;
-
   if (!startDate || !endDate) {
-    console.log(req.query);
     return res.status(400).json({ message: "Start & End dates are required" });
   }
   if (startDate > endDate) {
@@ -47,7 +44,6 @@ const getFeedbackForDate = asyncHandler(async (req, res) => {
       .status(400)
       .json({ message: "Start date cannot be after end date" });
   }
-  console.log("dates", startDate, endDate);
   const feedback = await sequelize.query(
     `SELECT * FROM feedback
     WHERE CAST(submitted_at as DATE) BETWEEN :startDate AND :endDate
@@ -62,8 +58,6 @@ const getFeedbackForDate = asyncHandler(async (req, res) => {
       },
     }
   );
-
-  console.log("feedback :>> ", feedback);
   res.status(200).json(feedback);
 });
 

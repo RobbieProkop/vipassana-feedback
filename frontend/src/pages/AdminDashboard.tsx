@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import styles from "../styles/feedbackDashboard.module.scss";
 import { BASE_URL } from "../constants";
 import Swal from "sweetalert2";
+import { DateState, Feedback } from "../utils/states";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-
-  interface datesState {
-    startDate: string;
-    endDate: string;
-  }
 
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")!)
@@ -24,19 +19,21 @@ const AdminDashboard = () => {
     }
   }, []);
 
-  let feedback;
-
   const date = new Date();
   const today = `${date.getFullYear()}-${
     date.getMonth() + 1
   }-${date.getDate()}`;
 
-  const [formData, setFormData] = useState<datesState>({
+  //states
+  const [formData, setFormData] = useState<DateState>({
     startDate: "",
     endDate: today,
   });
   const { startDate, endDate } = formData;
 
+  const [feedback, setFeedback] = useState<Feedback[]>([]);
+
+  //onclick and on change functions
   const onClick = async () => {
     if (!startDate || !endDate) {
       Swal.fire({
@@ -55,14 +52,16 @@ const AdminDashboard = () => {
       return;
     }
 
-    feedback = await axios.get(`${BASE_URL}/api/feedback`, {
+    const { data } = await axios.get(`${BASE_URL}/api/feedback`, {
       params: {
         startDate,
         endDate,
       },
     });
-    console.log("feedback", feedback);
+    console.log("data", data);
+    setFeedback(data);
   };
+  console.log("feedback", feedback);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -101,6 +100,7 @@ const AdminDashboard = () => {
           Retrieve Feedback
         </button>
       </div>
+      {feedback && feedback.map((feedback) => <h2>hi</h2>)}
     </div>
   );
 };
