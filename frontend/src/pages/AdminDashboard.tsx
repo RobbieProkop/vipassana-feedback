@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
 import axios from "axios";
+import styles from "../styles/feedbackDashboard.module.scss";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -11,6 +12,9 @@ const AdminDashboard = () => {
     : null;
 
   let feedback;
+
+  const date = new Date();
+  const today = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 
   useEffect(() => {
     if (!userInfo) {
@@ -25,6 +29,26 @@ const AdminDashboard = () => {
   if (!userInfo) {
     return <ErrorPage />;
   }
-  return <div>Hi</div>;
+
+  const onClick = () => {};
+  return (
+    <div className="container">
+      <h2>Retrieve Feedback Within Specified Period</h2>
+      <div className={styles.dates}>
+        <div className="formGroup">
+          <label>Start Date</label>
+          <input type="date" />
+        </div>
+        <div className="formGroup">
+          <label>End Date</label>
+          <input type="date" value={today} />
+        </div>
+      </div>
+
+      <button onClick={onClick} className="btn">
+        Retrieve Feedback
+      </button>
+    </div>
+  );
 };
 export default AdminDashboard;

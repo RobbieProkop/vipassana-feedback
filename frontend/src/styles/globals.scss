@@ -48,9 +48,11 @@ ul {
   list-style: none;
 }
 
-h1 {
+h1,
+h2 {
   text-align: center;
-  margin-top: 3rem;
+  margin: 3rem 0;
+  font-size: 2rem;
 }
 
 .container {
@@ -109,6 +111,34 @@ h1 {
 form {
   @include flex-center;
   flex-direction: column;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .formControl,
+  input,
+  textarea {
+    background-color: #fff;
+    border: none;
+    color: $dark;
+    font-size: 1.2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    &:focus {
+      outline: none;
+    }
+    &.errorControl {
+      border: 1px solid red;
+    }
+  }
 }
 
 .flex-center {
