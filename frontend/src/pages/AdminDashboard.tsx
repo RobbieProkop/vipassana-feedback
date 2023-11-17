@@ -100,10 +100,12 @@ const AdminDashboard = () => {
           Retrieve Feedback
         </button>
       </div>
-      {feedback &&
-        feedback.map((feedback) => (
-          <Card key={feedback.id} feedback={feedback} />
-        ))}
+      <div className={styles.grid}>
+        {feedback &&
+          feedback.map((feedback) => (
+            <Card key={feedback.id} feedback={feedback} />
+          ))}
+      </div>
     </div>
   );
 };

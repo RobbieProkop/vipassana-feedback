@@ -148,3 +148,9 @@ form {
 .flex-between {
   @include flex-between;
 }
+
+@media screen and (max-width: 1420px) {
+  .container {
+    padding: 0 1rem;
+  }
+}
