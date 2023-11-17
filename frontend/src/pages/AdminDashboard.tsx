@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "../styles/feedbackDashboard.module.scss";
 import { BASE_URL } from "../constants";
+import Swal from "sweetalert2";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -26,7 +27,9 @@ const AdminDashboard = () => {
   let feedback;
 
   const date = new Date();
-  const today = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  const today = `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()}`;
 
   const [formData, setFormData] = useState<datesState>({
     startDate: "",
@@ -35,10 +38,30 @@ const AdminDashboard = () => {
   const { startDate, endDate } = formData;
 
   const onClick = async () => {
-    await axios.get(`${BASE_URL}/api/feedback`).then((res) => {
-      feedback = res.data;
-      console.log("feedback", feedback);
+    if (!startDate || !endDate) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter a start & end date",
+      });
+      return;
+    }
+    if (startDate > endDate) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Start date cannot be after end date",
+      });
+      return;
+    }
+
+    feedback = await axios.get(`${BASE_URL}/api/feedback`, {
+      params: {
+        startDate,
+        endDate,
+      },
     });
+    console.log("feedback", feedback);
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,11 +77,23 @@ const AdminDashboard = () => {
       <div className={styles.dates}>
         <div className="formGroup">
           <label>Start Date</label>
-          <input type="date" value={startDate} onChange={onChange} />
+          <input
+            type="date"
+            name="startDate"
+            value={startDate}
+            onChange={onChange}
+            max={today}
+          />
         </div>
         <div className="formGroup">
           <label>End Date</label>
-          <input type="date" value={endDate} onChange={onChange} />
+          <input
+            type="date"
+            name="endDate"
+            value={endDate}
+            onChange={onChange}
+            max={today}
+          />
         </div>
       </div>
       <div className={styles.button}>

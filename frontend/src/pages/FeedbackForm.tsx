@@ -84,10 +84,7 @@ const FeedbackForm = () => {
       return;
     }
 
-    const res = await axios.post(
-      "http://localhost:8080/api/feedback",
-      formData
-    );
+    await axios.post("http://localhost:8080/api/feedback", formData);
     navigate("/feedback/thankyou");
   };
 

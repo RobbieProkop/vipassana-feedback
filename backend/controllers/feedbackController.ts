@@ -35,19 +35,24 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 //Route: GET /api/feedback
 //access: Private
 const getFeedbackForDate = asyncHandler(async (req, res) => {
-  const today = new Date().toISOString().slice(0, 10);
-  const { endDate = today } = req.query;
+  const { startDate, endDate } = req.query;
+  // const startDate = req.query.startDate;
 
-  const startDate = req.query.startDate;
-
-  if (!startDate) {
+  if (!startDate || !endDate) {
     console.log(req.query);
-    return res.status(400).json({ message: "Start date is required" });
+    return res.status(400).json({ message: "Start & End dates are required" });
   }
+  if (startDate > endDate) {
+    return res
+      .status(400)
+      .json({ message: "Start date cannot be after end date" });
+  }
+  console.log("dates", startDate, endDate);
   const feedback = await sequelize.query(
-    `SELECT * FROM Feedback
+    `SELECT * FROM feedback
     WHERE CAST(submitted_at as DATE) BETWEEN :startDate AND :endDate
-  ORDER BY id DESC;`,
+  ORDER BY id DESC;
+  `,
     {
       raw: true,
       type: QueryTypes.SELECT,
