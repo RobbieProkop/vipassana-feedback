@@ -5,6 +5,7 @@ import styles from "../styles/feedbackDashboard.module.scss";
 import { BASE_URL } from "../constants";
 import Swal from "sweetalert2";
 import { DateState, Feedback } from "../utils/states";
+import Card from "../components/Card/Card";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -61,7 +62,6 @@ const AdminDashboard = () => {
     console.log("data", data);
     setFeedback(data);
   };
-  console.log("feedback", feedback);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -100,7 +100,10 @@ const AdminDashboard = () => {
           Retrieve Feedback
         </button>
       </div>
-      {feedback && feedback.map((feedback) => <h2>hi</h2>)}
+      {feedback &&
+        feedback.map((feedback) => (
+          <Card key={feedback.id} feedback={feedback} />
+        ))}
     </div>
   );
 };
