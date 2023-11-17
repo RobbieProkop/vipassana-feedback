@@ -44,10 +44,11 @@ const AdminDashboard = () => {
           <input type="date" value={today} />
         </div>
       </div>
-
-      <button onClick={onClick} className="btn">
-        Retrieve Feedback
-      </button>
+      <div className={styles.button}>
+        <button onClick={onClick} className="btn btn-block">
+          Retrieve Feedback
+        </button>
+      </div>
     </div>
   );
 };

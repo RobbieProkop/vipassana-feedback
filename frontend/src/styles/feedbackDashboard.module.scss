@@ -1,7 +1,14 @@
+@import "variables";
+
 .dates {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 800px;
   margin: auto;
+}
+
+.button {
+  width: 100%;
+  @include flex-center;
 }
