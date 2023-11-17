@@ -2,21 +2,25 @@
 
 .dates {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   max-width: 800px;
   margin: auto;
 }
 
 .button {
-  width: 100%;
   @include flex-center;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 3rem;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0 1rem;
+  margin-bottom: 3rem;
 }
 
 @media screen and (max-width: 1120px) {
