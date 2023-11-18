@@ -23,6 +23,7 @@ const Card: FC<{ feedback: Feedback; active: boolean; modal: boolean }> = ({
     q5_2,
     q5_3,
     q5_4,
+    additional_info,
   } = feedback;
 
   const submitted = submitted_at.split("T")[0];
@@ -83,6 +84,7 @@ const Card: FC<{ feedback: Feedback; active: boolean; modal: boolean }> = ({
           <h3 className={styles.q5}>
             - Your overall experience: <span>{q5_4}</span>
           </h3>
+          <h3>Additional: {additional_info}</h3>
         </div>
       )}
     </div>
