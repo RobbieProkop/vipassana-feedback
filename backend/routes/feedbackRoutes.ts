@@ -8,7 +8,7 @@ import { protect } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 //all routes are prefixed with /api/feedback
-router.route("/").get(protect, getFeedbackForDate).post(submitFeedback);
+router.route("/").get(getFeedbackForDate).post(submitFeedback);
 router.route("/:id").get(protect, getFeedbackById);
 
 export default router;

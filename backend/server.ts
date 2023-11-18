@@ -4,7 +4,6 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import feedbackRoutes from "./routes/feedbackRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
-import pool from "./config/db.js";
 import cors from "cors";
 
 const PORT = process.env.PORT || 8080;
@@ -36,12 +35,6 @@ app.get("/api/heartbeat", async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
-
-// app.get("/api/feedback/:id", (req, res) => {
-//   const feedback = "Some feedback here";
-
-//   res.json({ feedback });
-// });
 
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/users", userRoutes);
