@@ -128,10 +128,12 @@ const AdminDashboard = () => {
           ))}
         {activeCardId && (
           <div className={styles.overlay} onClick={() => setActiveCardId(null)}>
-            <div className={`${styles.feedbackCard} ${styles.modal}`}>
+            <div
+              className={`${styles.feedbackCard} ${styles.modal}`}
+              key={activeCardId}
+            >
               {/* <button onClick={() => setActiveCardId(null)}>X</button> */}
               <Card
-                key={activeCardId}
                 feedback={feedback.find((f) => f.id === activeCardId)!}
                 active={true}
                 modal={true}

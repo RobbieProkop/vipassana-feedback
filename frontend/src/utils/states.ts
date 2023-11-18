@@ -19,3 +19,10 @@ export interface Feedback {
   q5_4: number;
   submitted_at: string;
 }
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  isAdmin: boolean;
+}

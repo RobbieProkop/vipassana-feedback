@@ -41,7 +41,7 @@ const AdminLogin = () => {
       toast.success(`Welcome ${data.username}`);
       localStorage.setItem("userInfo", JSON.stringify(data));
 
-      navigate("/admin/feedback");
+      navigate("/feedbackDashboard");
     } catch (error: any) {
       // alert(error.response.data.message);
 
