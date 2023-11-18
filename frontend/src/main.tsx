@@ -14,7 +14,7 @@ import FeedbackForm from "./pages/FeedbackForm";
 import Thankyou from "./pages/thankyou";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
-import AdminFeedbackForm from "./pages/AdminFeedbackForm";
+import AdminFeedbackForm from "./pages/FeedbackPage.tsx";
 import Profile from "./pages/Profile.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 
