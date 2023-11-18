@@ -33,6 +33,8 @@ const AdminDashboard = () => {
   const { startDate, endDate } = formData;
 
   const [feedback, setFeedback] = useState<Feedback[]>([]);
+  //for card active state
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
   //onclick and on change functions
   const onClick = async () => {
@@ -59,7 +61,6 @@ const AdminDashboard = () => {
         endDate,
       },
     });
-    console.log("data", data);
     setFeedback(data);
   };
 
@@ -70,6 +71,16 @@ const AdminDashboard = () => {
       [name]: value,
     }));
   };
+
+  //handle Card Active State Click
+  const handleCardClick = (id: number) => {
+    if (activeCardId === id) {
+      setActiveCardId(null);
+    } else {
+      setActiveCardId(id);
+    }
+  };
+
   return (
     <div className="container">
       <h2>Retrieve Feedback Within Specified Period</h2>
@@ -103,8 +114,31 @@ const AdminDashboard = () => {
       <div className={styles.grid}>
         {feedback &&
           feedback.map((feedback) => (
-            <Card key={feedback.id} feedback={feedback} />
+            <div
+              className={styles.feedbackCard}
+              onClick={() => handleCardClick(feedback.id)}
+            >
+              <Card
+                key={feedback.id}
+                feedback={feedback}
+                active={false}
+                modal={false}
+              />
+            </div>
           ))}
+        {activeCardId && (
+          <div className={styles.overlay} onClick={() => setActiveCardId(null)}>
+            <div className={`${styles.feedbackCard} ${styles.modal}`}>
+              {/* <button onClick={() => setActiveCardId(null)}>X</button> */}
+              <Card
+                key={activeCardId}
+                feedback={feedback.find((f) => f.id === activeCardId)!}
+                active={true}
+                modal={true}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
