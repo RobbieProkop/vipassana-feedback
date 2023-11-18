@@ -36,6 +36,15 @@ app.get("/api/heartbeat", async (req, res) => {
   }
 });
 
+app.get("/api/authenticate", (req, res) => {
+  const token = req.cookies.jwt;
+  console.log("token :>> ", token);
+  if (!token)
+    return res.status(401).json({ message: "Not Authorized, no token" });
+
+  res.status(200).json({ message: "Authorized" });
+});
+
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/users", userRoutes);
 

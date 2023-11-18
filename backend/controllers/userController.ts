@@ -26,7 +26,6 @@ const loginUser = asyncHandler(async (req, res) => {
   if (!isMatch) return throwError(res, 401, "Invalid credentials");
 
   generateToken(res, user.id);
-  console.log("token :>> ", res);
   res.status(200).json(userResponse(user));
 });
 
@@ -70,7 +69,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // Route: POST /api/users/logout
 // Access: Private
 const logoutUser = asyncHandler(async (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("jwt");
   res.json({ message: "logged out" });
 });
 

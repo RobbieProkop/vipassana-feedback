@@ -6,6 +6,7 @@ import axios from "axios";
 import { USERS_URL } from "../constants";
 import { useNavigate } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
+import { checkAuth } from "../utils/helpers";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -15,8 +16,9 @@ const Profile = () => {
     : null;
   useEffect(() => {
     if (!userInfo) {
-      navigate("/");
+      navigate("/login");
     }
+    checkAuth(navigate);
   }, []);
   if (!userInfo) {
     return <ErrorPage />;

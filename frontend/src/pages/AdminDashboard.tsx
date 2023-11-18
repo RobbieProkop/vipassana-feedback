@@ -6,18 +6,13 @@ import { BASE_URL } from "../constants";
 import Swal from "sweetalert2";
 import { DateState, Feedback } from "../utils/states";
 import Card from "../components/Card/Card";
+import { checkAuth } from "../utils/helpers";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
-  const userInfo = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo")!)
-    : null;
-
   useEffect(() => {
-    if (!userInfo) {
-      navigate("/");
-    }
+    checkAuth(navigate);
   }, []);
 
   const date = new Date();

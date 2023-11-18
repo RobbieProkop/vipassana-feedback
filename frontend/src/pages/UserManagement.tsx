@@ -3,20 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { User } from "../utils/states";
 import axios from "axios";
 import { BASE_URL } from "../constants";
+import { checkAuth } from "../utils/helpers";
 
 const Users = () => {
   const navigate = useNavigate();
-
-  const userInfo = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo")!)
-    : null;
-
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    if (!userInfo) {
-      navigate("/");
-    }
+    checkAuth(navigate);
     axios
       .get(`${BASE_URL}/api/users`)
       .then((res) => {

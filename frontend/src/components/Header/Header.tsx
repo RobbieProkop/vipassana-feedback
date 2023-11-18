@@ -18,11 +18,10 @@ const Header: FC<HeaderProps> = ({ navOpen, setNavOpen }) => {
     : null;
 
   const logout = async () => {
-    console.log("logged out");
     localStorage.removeItem("userInfo");
     await axios.post(`${USERS_URL}/logout`);
     setNavOpen(false);
-    navigate("/");
+    navigate("/login");
   };
 
   const closeNav = () => {
