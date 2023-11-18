@@ -16,6 +16,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import Profile from "./pages/Profile.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
+import UserManagement from "./pages/UserManagement.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<AdminLogin />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/feedbackDashboard" element={<AdminDashboard />} />
+      <Route path="/admin/users" element={<UserManagement />} />
       <Route path="*" element={<ErrorPage />} />
     </Route>
   )
