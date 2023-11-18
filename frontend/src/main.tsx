@@ -14,7 +14,6 @@ import FeedbackForm from "./pages/FeedbackForm";
 import Thankyou from "./pages/thankyou";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
-import AdminFeedbackForm from "./pages/FeedbackPage.tsx";
 import Profile from "./pages/Profile.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 
@@ -27,7 +26,6 @@ const router = createBrowserRouter(
       <Route path="/login" element={<AdminLogin />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/feedbackDashboard" element={<AdminDashboard />} />
-      <Route path="/feedback/:id" element={<AdminFeedbackForm />} />
       <Route path="*" element={<ErrorPage />} />
     </Route>
   )
