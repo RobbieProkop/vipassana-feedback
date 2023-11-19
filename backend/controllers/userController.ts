@@ -71,9 +71,6 @@ const registerUser = asyncHandler(async (req, res) => {
 const logoutUser = asyncHandler(async (req, res) => {
   try {
     res.clearCookie("jwt");
-    // res.cookie("jwt", "", { expires: new Date(0), path: "/" });
-    console.log("res", res);
-
     res.status(200).json({ message: "logged out" });
   } catch (error) {
     console.log("error :>> ", error);
