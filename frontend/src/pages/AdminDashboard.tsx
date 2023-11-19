@@ -127,7 +127,6 @@ const AdminDashboard = () => {
               className={`${styles.feedbackCard} ${styles.modal}`}
               key={activeCardId}
             >
-              {/* <button onClick={() => setActiveCardId(null)}>X</button> */}
               <Card
                 feedback={feedback.find((f) => f.id === activeCardId)!}
                 active={true}

@@ -16,21 +16,6 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   },
 });
 
-//Description: Get All Feedback
-//Route: GET /api/feedback
-//access: Private
-// const getAllFeedback = asyncHandler(async (req, res) => {
-//   const feedback = await sequelize.query(
-//     `SELECT * FROM Feedback
-//   ORDER BY id DESC;`,
-//     {
-//       raw: true,
-//       type: QueryTypes.SELECT,
-//     }
-//   );
-//   res.status(200).json(feedback);
-// });
-
 //Description: Get All Feedback for specific date range
 //Route: GET /api/feedback
 //access: Private

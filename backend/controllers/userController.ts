@@ -5,6 +5,7 @@ import generateToken from "../utils/generateToken.js";
 import throwError from "../utils/throwError.js";
 import updateUserPassword from "../utils/updateUserPassword.js";
 import userResponse from "../utils/userResponse.js";
+import adminResponse from "../utils/adminResponse.js";
 
 // DESC: authenticate user & get token
 // Route: POST /api/users/login
@@ -139,7 +140,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
   console.log("users res", res);
   const users = await User.findAll();
   if (!users) return throwError(res, 404, "No users found");
-  res.status(200).json(users);
+  res.status(200).json(adminResponse(users));
 });
 
 // DESC: Get User By ID
