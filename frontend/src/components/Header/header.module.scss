@@ -24,6 +24,7 @@
       position: absolute;
       top: 45px;
       right: 65px;
+      z-index: 100;
       div {
         @include flex-center;
         font-size: 1.2rem;

@@ -23,6 +23,11 @@ const Users = () => {
       });
   }, []);
 
+  users.sort((a, b) => {
+    if (a.id < b.id) return -1;
+    return 1;
+  });
+
   console.log("users", users);
   return (
     <div className="container">
