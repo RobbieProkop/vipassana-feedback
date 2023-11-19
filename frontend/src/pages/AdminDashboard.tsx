@@ -112,13 +112,9 @@ const AdminDashboard = () => {
             <div
               className={styles.feedbackCard}
               onClick={() => handleCardClick(feedback.id)}
+              key={feedback.id}
             >
-              <Card
-                key={feedback.id}
-                feedback={feedback}
-                active={false}
-                modal={false}
-              />
+              <Card feedback={feedback} active={false} modal={false} />
             </div>
           ))}
         {activeCardId && (

@@ -46,7 +46,18 @@ const FeedbackForm = () => {
     additional: "",
   });
 
-  const { name, email, courseStart, daysServed, q1, q2, q3, q4, q5 } = formData;
+  const {
+    name,
+    email,
+    courseStart,
+    daysServed,
+    q1,
+    q2,
+    q3,
+    q4,
+    q5,
+    additional,
+  } = formData;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -418,7 +429,12 @@ const FeedbackForm = () => {
 
         <div className={styles.formGroup}>
           <label htmlFor="additional">Additional Suggestions / Feedback:</label>
-          <textarea rows={10} name="Additional Info" onChange={handleChange} />
+          <textarea
+            rows={10}
+            name="additional"
+            value={additional}
+            onChange={handleChange}
+          />
         </div>
 
         <button className="btn btn-block" onClick={onSubmit}>

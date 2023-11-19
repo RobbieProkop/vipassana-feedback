@@ -30,8 +30,6 @@ const Card: FC<{
 
     const submitted = submitted_at.split("T")[0];
 
-    // const [active, setActive] = useState<boolean>(false);
-
     return (
       <div
         className={
@@ -89,7 +87,9 @@ const Card: FC<{
             <h3 className={styles.q5}>
               - Your overall experience: <span>{q5_4}</span>
             </h3>
-            <h3>Additional: {additional_info}</h3>
+            <h3>
+              Additional: <span>{additional_info}</span>
+            </h3>
           </div>
         )}
       </div>
