@@ -20,7 +20,7 @@ router
   .get(protect, admin, getAllUsers)
   .post(protect, admin, registerUser); //register is protected by the admin to prevent random people from registering;
 router.post("/login", loginUser);
-router.post("/logout", logoutUser);
+router.get("/logout", logoutUser);
 router
   .route("/profile")
   .get(protect, getUserProfile)

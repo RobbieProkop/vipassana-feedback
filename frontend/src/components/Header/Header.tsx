@@ -17,11 +17,16 @@ const Header: FC<HeaderProps> = ({ navOpen, setNavOpen }) => {
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
 
-  const logout = async () => {
+  const logout = () => {
     localStorage.removeItem("userInfo");
-    await axios.post(`${USERS_URL}/logout`);
-    setNavOpen(false);
-    navigate("/login");
+    axios
+      .get(`${USERS_URL}/logout`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setNavOpen(false);
+        navigate("/login");
+      });
   };
 
   const closeNav = () => {

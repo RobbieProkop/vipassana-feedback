@@ -6,6 +6,7 @@ import { USERS_URL } from "../constants";
 import Spinner from "../components/Spinner/Spinner";
 import styles from "../styles/feedbackForm.module.scss";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -32,7 +33,14 @@ const AdminLogin = () => {
       password,
     };
 
-    if (!username || !password) return alert("Please fill all the fields");
+    if (!username || !password) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please fill all the fields",
+      });
+      return;
+    }
 
     try {
       setLoading(true);

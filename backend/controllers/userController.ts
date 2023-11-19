@@ -69,15 +69,21 @@ const registerUser = asyncHandler(async (req, res) => {
 // Route: POST /api/users/logout
 // Access: Private
 const logoutUser = asyncHandler(async (req, res) => {
-  res.clearCookie("jwt");
-  res.json({ message: "logged out" });
+  try {
+    res.clearCookie("jwt");
+    // res.cookie("jwt", "", { expires: new Date(0), path: "/" });
+    console.log("res", res);
+
+    res.status(200).json({ message: "logged out" });
+  } catch (error) {
+    console.log("error :>> ", error);
+  }
 });
 
 // DESC: get user profile
 // Route: GET /api/users/profile
 // Access: Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  // const user = await User.findByPk(req.user.id);
   const user = req.user;
   if (!user) return throwError(res, 404, "User not found");
 

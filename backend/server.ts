@@ -27,8 +27,6 @@ app.use(
 //this is an example of a route handler to spin up the server
 app.get("/api/heartbeat", async (req, res) => {
   try {
-    // const result = await pool.query("SELECT NOW()");
-    // res.json(result.rows[0]);
     res.json({ message: "Server heartbeat" });
   } catch (error) {
     console.log("error :>> ", error);
@@ -38,7 +36,6 @@ app.get("/api/heartbeat", async (req, res) => {
 
 app.get("/api/authenticate", (req, res) => {
   const token = req.cookies.jwt;
-  console.log("token :>> ", token);
   if (!token)
     return res.status(401).json({ message: "Not Authorized, no token" });
 
