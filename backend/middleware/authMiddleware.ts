@@ -4,7 +4,9 @@ import User from "../models/userModel.js";
 
 const protect = asyncHandler(async (req, res, next) => {
   //read JWT from the cookie
-  let token = req.cookies.token;
+
+  console.log("req.cookies :>> ", req.cookies);
+  let token = req.cookies.jwt;
   if (!token) {
     res.status(401);
     throw new Error("Not authorized, no token");

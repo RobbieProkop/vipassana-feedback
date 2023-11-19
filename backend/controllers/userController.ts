@@ -136,6 +136,7 @@ const updatePassword = asyncHandler(async (req, res) => {
 // Route: GET /api/users
 // Access: Private/Admin
 const getAllUsers = asyncHandler(async (req, res) => {
+  console.log("users res", res);
   const users = await User.findAll();
   if (!users) return throwError(res, 404, "No users found");
   res.status(200).json(users);

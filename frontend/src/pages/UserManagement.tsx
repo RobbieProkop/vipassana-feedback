@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "../utils/states";
 import axios from "axios";
-import { BASE_URL } from "../constants";
+import { USERS_URL } from "../constants";
 import { checkAuth } from "../utils/helpers";
+import Card from "../components/Card/Card";
+import styles from "../styles/feedbackDashboard.module.scss";
 
 const Users = () => {
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ const Users = () => {
   useEffect(() => {
     checkAuth(navigate);
     axios
-      .get(`${BASE_URL}/api/users`)
+      .get(`${USERS_URL}`, { withCredentials: true })
       .then((res) => {
         setUsers(res.data);
       })
@@ -23,8 +25,19 @@ const Users = () => {
 
   console.log("users", users);
   return (
-    <div>
+    <div className="container">
       <h1>User Management</h1>
+      <div className={styles.grid}>
+        {users &&
+          users.map((user) => (
+            <div
+              className={`${styles.feedbackCard} ${styles.modal}`}
+              key={user.id}
+            >
+              <Card user={user} />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
