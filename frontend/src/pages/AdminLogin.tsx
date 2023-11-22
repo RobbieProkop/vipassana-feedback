@@ -7,6 +7,7 @@ import Spinner from "../components/Spinner/Spinner";
 import styles from "../styles/feedbackForm.module.scss";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { checkAuth } from "../utils/helpers";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -20,10 +21,11 @@ const AdminLogin = () => {
     : null;
 
   useEffect(() => {
-    if (userInfo) {
-      navigate("/admin/feedback");
-    }
-  }, [userInfo]);
+    checkAuth(navigate);
+    // if (userInfo) {
+    //   navigate("/feedbackDashboard");
+    // }
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

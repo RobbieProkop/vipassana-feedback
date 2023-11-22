@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkAuth(navigate);
+    // checkAuth(navigate);
   }, []);
 
   const date = new Date();
@@ -30,6 +30,7 @@ const AdminDashboard = () => {
   const [feedback, setFeedback] = useState<Feedback[]>([]);
   //for card active state
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   //onclick and on change functions
   const onClick = async () => {
@@ -119,6 +120,36 @@ const AdminDashboard = () => {
           ))}
         {activeCardId && (
           <div className={styles.overlay} onClick={() => setActiveCardId(null)}>
+            <dialog
+              open={activeCardId ? true : false}
+              className={`${styles.feedbackCard} ${styles.modal}`}
+              key={activeCardId}
+            >
+              <form method="dialog">
+                <div onClick={() => setIsOpen(false)}>
+                  <Card
+                    feedback={feedback.find((f) => f.id === activeCardId)!}
+                    active={true}
+                    modal={true}
+                  />
+                </div>
+              </form>
+            </dialog>
+          </div>
+        )}
+
+        {/* {feedback &&
+          feedback.map((feedback) => (
+            <div
+              className={styles.feedbackCard}
+              onClick={() => handleCardClick(feedback.id)}
+              key={feedback.id}
+            >
+              <Card feedback={feedback} active={false} modal={false} />
+            </div>
+          ))}
+        {activeCardId && (
+          <div className={styles.overlay} onClick={() => setActiveCardId(null)}>
             <div
               className={`${styles.feedbackCard} ${styles.modal}`}
               key={activeCardId}
@@ -130,7 +161,7 @@ const AdminDashboard = () => {
               />
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

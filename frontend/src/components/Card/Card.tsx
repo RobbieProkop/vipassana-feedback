@@ -32,6 +32,7 @@ const Card: FC<{
 
     return (
       <div
+        id={feedback ? feedback.id.toString() : user ? user.id.toString() : ""}
         className={
           active
             ? `${styles.feedbackCard} ${styles.active}`
