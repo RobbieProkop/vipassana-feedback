@@ -91,6 +91,7 @@ const Card: FC<{
             <h3>
               Additional: <span>{additional_info}</span>
             </h3>
+            <button className="btn btn-cancel">Close</button>
           </div>
         )}
       </div>
