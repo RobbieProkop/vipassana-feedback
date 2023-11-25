@@ -70,6 +70,7 @@
 
   .checkbox {
     @include flex-between;
+    margin-bottom: 2rem;
 
     &:hover {
       cursor: pointer;

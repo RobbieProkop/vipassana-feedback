@@ -1,7 +1,11 @@
 import { useState } from "react";
 import styles from "../styles/feedbackForm.module.scss";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const AddUser = () => {
+  const navigate = useNavigate();
   interface FormDataState {
     username: string;
     email: string;
@@ -33,6 +37,72 @@ const AddUser = () => {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const formFilled = [username, email, password, confirmPassword].every(
+      (value) => value !== ""
+    );
+
+    if (!formFilled) {
+      Swal.fire({
+        title: "Oops...",
+        text: "Please fill out all fields",
+        icon: "error",
+      });
+      return;
+    }
+
+    const usernameRegex = /\s/;
+    const emailRegex = /\S+@\S+\.\S+/;
+
+    if (usernameRegex.test(username.trim())) {
+      Swal.fire({
+        title: "Oops...",
+        text: "Username cannot contain spaces",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      Swal.fire({
+        title: "Oops...",
+        text: "Please enter a valid email",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Swal.fire({
+        title: "Oops...",
+        text: "Passwords do not match",
+        icon: "error",
+      });
+      return;
+    }
+
+    try {
+      const res = await axios.post("/api/users", formData);
+      console.log("res :>> ", res);
+      Swal.fire({
+        title: "Success!",
+        text: "User added",
+        icon: "success",
+      });
+    } catch (error) {
+      console.log("error :>> ", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    }
+  };
+  const cancel = () => {
+    navigate("/admin/users");
   };
 
   return (
@@ -98,6 +168,13 @@ const AddUser = () => {
           />
         </div>
       </form>
+
+      <button className="btn btn-block" onClick={onSubmit}>
+        Submit
+      </button>
+      <button className="btn btn-block btn-cancel" onClick={cancel}>
+        Cancel
+      </button>
     </div>
   );
 };
