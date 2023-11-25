@@ -106,6 +106,20 @@ h2 {
   &-cancel {
     background-color: $gray;
   }
+  &-danger {
+    background-color: $danger;
+  }
+}
+
+.buttons {
+  @include flex-between;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+
+  button {
+    width: 48%;
+  }
 }
 
 form {

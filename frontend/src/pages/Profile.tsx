@@ -15,10 +15,10 @@ const Profile = () => {
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
   useEffect(() => {
-    if (!userInfo) {
+    if (!checkAuth(false)) {
+      localStorage.removeItem("userInfo");
       navigate("/login");
     }
-    checkAuth(navigate);
   }, []);
   if (!userInfo) {
     return <ErrorPage />;
