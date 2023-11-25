@@ -18,6 +18,7 @@ import Profile from "./pages/Profile.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import UserManagement from "./pages/UserManagement.tsx";
 import DeleteConfirm from "./pages/DeleteConfirm.tsx";
+import AddUser from "./pages/AddUser.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       <Route path="/feedbackDashboard" element={<AdminDashboard />} />
       <Route path="/admin/users" element={<UserManagement />} />
       <Route path="/admin/deleteUser/:id" element={<DeleteConfirm />} />
+      <Route path="/admin/addUser" element={<AddUser />} />
       <Route path="*" element={<ErrorPage />} />
     </Route>
   )

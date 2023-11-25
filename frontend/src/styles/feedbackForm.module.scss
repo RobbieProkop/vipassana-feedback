@@ -67,6 +67,24 @@
       }
     }
   }
+
+  .checkbox {
+    @include flex-between;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    label {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+
+    input {
+      cursor: pointer;
+    }
+  }
   .hidden {
     display: none;
   }
