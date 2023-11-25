@@ -13,7 +13,9 @@ export const checkAuth = async (isAdmin: boolean) => {
     }
   } else {
     try {
-      const res = await axios.get("/api/authenticate");
+      const res = await axios.get("/api/authenticate", {
+        withCredentials: true,
+      });
       if (res.status !== 200) {
         return false;
       }

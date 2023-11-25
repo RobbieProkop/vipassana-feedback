@@ -25,8 +25,8 @@ const Profile = () => {
   }
 
   interface FormDataState {
-    username?: string;
-    email?: string;
+    username: string;
+    email: string;
     prevPassword?: string;
     newPassword?: string;
     confirmPassword?: string;
@@ -65,6 +65,27 @@ const Profile = () => {
         icon: "error",
         title: "Oops...",
         text: "All fields are required!",
+      });
+      return;
+    }
+
+    const usernameRegex = /\s/;
+    const emailRegex = /\S+@\S+\.\S+/;
+
+    if (usernameRegex.test(username)) {
+      Swal.fire({
+        title: "Oops...",
+        text: "Username cannot contain spaces",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      Swal.fire({
+        title: "Oops...",
+        text: "Please enter a valid email",
+        icon: "error",
       });
       return;
     }

@@ -3,6 +3,7 @@ import styles from "../styles/feedbackForm.module.scss";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddUser = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const AddUser = () => {
     const usernameRegex = /\s/;
     const emailRegex = /\S+@\S+\.\S+/;
 
-    if (usernameRegex.test(username.trim())) {
+    if (usernameRegex.test(username)) {
       Swal.fire({
         title: "Oops...",
         text: "Username cannot contain spaces",
@@ -85,13 +86,10 @@ const AddUser = () => {
     }
 
     try {
-      const res = await axios.post("/api/users", formData);
-      console.log("res :>> ", res);
-      Swal.fire({
-        title: "Success!",
-        text: "User added",
-        icon: "success",
-      });
+      const { data } = await axios.post("/api/users", formData);
+      console.log("{data} :>> ", data);
+      toast.success(data.message);
+      navigate("/admin/users");
     } catch (error) {
       console.log("error :>> ", error);
       Swal.fire({

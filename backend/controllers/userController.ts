@@ -57,8 +57,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
 
     if (user) {
-      generateToken(res, user.id);
-      res.status(201).json(userResponse(user));
+      res.status(201).json({ message: "User created" });
     }
   } catch (error) {
     console.log("error :>> ", error);
