@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Feedback, User } from "../../utils/states";
 import styles from "./card.module.scss";
 import { FC } from "react";
@@ -9,6 +10,7 @@ const Card: FC<{
   modal?: boolean;
   user?: User;
 }> = ({ feedback, active, modal, user }) => {
+  const navigate = useNavigate();
   if (feedback) {
     const {
       course_start_date,
@@ -98,9 +100,15 @@ const Card: FC<{
     );
   } else if (user) {
     const { username, id, email, isAdmin } = user;
+    const deleteConfirm = (id: number) => {
+      navigate(`/admin/deleteUser/${id}`);
+    };
     return (
       <div className={styles.feedbackCard}>
-        <p>ID: {id}</p>
+        <div className={styles.flex} onClick={() => deleteConfirm(id)}>
+          <p>ID: {id}</p>
+          <button className="btn btn-delete">X</button>
+        </div>
         <div className={styles.heading}>
           <h2>Name: {username}</h2>
           <h3>Email: {email}</h3>

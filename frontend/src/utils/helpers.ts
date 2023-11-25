@@ -1,13 +1,25 @@
 import axios from "axios";
-import { NavigateFunction } from "react-router-dom";
 
-export const checkAuth = async (navigate: NavigateFunction) => {
-  try {
-    const res = await axios.get("/api/authenticate");
-    if (res.status !== 200) {
-      navigate("/login");
+export const checkAuth = async (isAdmin: boolean) => {
+  if (isAdmin) {
+    try {
+      const res = await axios.get("/api/authenticate/admin");
+      if (res.status !== 200) {
+        return false;
+      }
+      return true;
+    } catch (error) {
+      return false;
     }
-  } catch (error) {
-    navigate("/login");
+  } else {
+    try {
+      const res = await axios.get("/api/authenticate");
+      if (res.status !== 200) {
+        return false;
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 };

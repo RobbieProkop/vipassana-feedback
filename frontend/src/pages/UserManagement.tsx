@@ -6,13 +6,20 @@ import { USERS_URL } from "../constants";
 import { checkAuth } from "../utils/helpers";
 import Card from "../components/Card/Card";
 import styles from "../styles/feedbackDashboard.module.scss";
+import ErrorPage from "./ErrorPage";
 
 const Users = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>([]);
+  const [isUnauth, setIsUnauth] = useState<boolean>(false);
 
   useEffect(() => {
-    checkAuth(navigate);
+    if (!checkAuth(true)) {
+      localStorage.removeItem("userInfo");
+      navigate("/login");
+      return;
+    }
+
     axios
       .get(`${USERS_URL}`, { withCredentials: true })
       .then((res) => {
@@ -20,6 +27,7 @@ const Users = () => {
       })
       .catch((err) => {
         console.log(err);
+        setIsUnauth(true);
       });
   }, []);
 
@@ -28,7 +36,10 @@ const Users = () => {
     return 1;
   });
 
-  console.log("users", users);
+  if (isUnauth) {
+    return <ErrorPage />;
+  }
+
   return (
     <div className="container">
       <h1>User Management</h1>
@@ -43,6 +54,14 @@ const Users = () => {
             </div>
           ))}
       </div>
+      <button
+        className={`btn btn-block ${styles.button}`}
+        onClick={() => {
+          navigate("/admin/addUser");
+        }}
+      >
+        Add User
+      </button>
     </div>
   );
 };

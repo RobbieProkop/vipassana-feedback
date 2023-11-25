@@ -21,7 +21,10 @@ const AdminLogin = () => {
     : null;
 
   useEffect(() => {
-    checkAuth(navigate);
+    if (!checkAuth(false)) {
+      localStorage.removeItem("userInfo");
+      navigate("/login");
+    }
     // if (userInfo) {
     //   navigate("/feedbackDashboard");
     // }

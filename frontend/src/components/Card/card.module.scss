@@ -1,6 +1,14 @@
 @import "../../styles/variables.scss";
 
 .feedbackCard {
+  .flex {
+    @include flex-between;
+
+    button {
+      margin: 0;
+      background-color: #333;
+    }
+  }
   .heading {
     text-align: center;
     margin-bottom: 2rem;

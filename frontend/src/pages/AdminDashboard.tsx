@@ -12,7 +12,10 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // checkAuth(navigate);
+    if (!checkAuth(false)) {
+      localStorage.removeItem("userInfo");
+      navigate("/login");
+    }
   }, []);
 
   const date = new Date();
