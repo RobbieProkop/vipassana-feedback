@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import feedbackRoutes from "./routes/feedbackRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -34,13 +35,7 @@ app.get("/api/heartbeat", async (req, res) => {
   }
 });
 
-app.get("/api/authenticate", (req, res) => {
-  const token = req.cookies.jwt;
-  if (!token)
-    return res.status(401).json({ message: "Not Authorized, no token" });
-
-  res.status(200).json({ message: "Authorized" });
-});
+app.use("/api/authenticate", authRoutes);
 
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/users", userRoutes);

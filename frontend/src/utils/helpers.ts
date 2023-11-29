@@ -1,10 +1,14 @@
 import axios from "axios";
+import { BASE_URL } from "../constants";
 
 export const checkAuth = async (isAdmin: boolean) => {
   if (isAdmin) {
     try {
-      const res = await axios.get("/api/authenticate/admin");
+      const res = await axios.get(`${BASE_URL}/api/authenticate/admin`, {
+        withCredentials: true,
+      });
       if (res.status !== 200) {
+        console.log("res", res);
         return false;
       }
       return true;
@@ -13,7 +17,7 @@ export const checkAuth = async (isAdmin: boolean) => {
     }
   } else {
     try {
-      const res = await axios.get("/api/authenticate", {
+      const res = await axios.get(`${BASE_URL}/api/authenticate`, {
         withCredentials: true,
       });
       if (res.status !== 200) {
