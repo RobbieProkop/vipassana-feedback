@@ -4,8 +4,6 @@ import User from "../models/userModel.js";
 
 const protect = asyncHandler(async (req, res, next) => {
   //read JWT from the cookie
-
-  console.log("req.cookies :>> ", req.cookies);
   let token = req.cookies.jwt;
   if (!token) {
     res.status(401);
@@ -28,7 +26,6 @@ const protect = asyncHandler(async (req, res, next) => {
 });
 
 const admin = (req, res, next) => {
-  console.log("req.user :>> ", req.user);
   if (req.user && req.user.isAdmin) {
     next();
   } else {

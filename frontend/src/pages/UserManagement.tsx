@@ -19,7 +19,6 @@ const Users = () => {
       navigate("/login");
       return;
     }
-
     axios
       .get(`${USERS_URL}`, { withCredentials: true })
       .then((res) => {

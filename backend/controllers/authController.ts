@@ -15,7 +15,6 @@ const getAdmin = asyncHandler(async (req, res) => {
   if (!token)
     return res.status(401).json({ message: "Not Authorized, no token" });
 
-  console.log("req.cookies.jwt :>> ", req.cookies.jwt);
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
   //get user from DB, assign it to the req.user property
@@ -23,7 +22,12 @@ const getAdmin = asyncHandler(async (req, res) => {
     attributes: { exclude: ["password"] },
   });
 
-  res.status(200).json(req.user.isAdmin);
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(401).json({ message: "Not Authorized as an admin" });
+  } else {
+  }
+
+  res.status(200).json({ message: "Authorized as an admin" });
 });
 
 export { getAuth, getAdmin };
