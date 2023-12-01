@@ -7,12 +7,13 @@ import Swal from "sweetalert2";
 import { DateState, Feedback } from "../utils/states";
 import Card from "../components/Card/Card";
 import { checkAuth } from "../utils/helpers";
+const isLogged = checkAuth(false);
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!checkAuth(false)) {
+    if (!isLogged) {
       localStorage.removeItem("userInfo");
       navigate("/login");
     }

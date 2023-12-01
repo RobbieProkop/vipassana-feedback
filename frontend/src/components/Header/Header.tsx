@@ -26,6 +26,9 @@ const Header: FC<HeaderProps> = ({ navOpen, setNavOpen }) => {
       .then((res) => {
         setNavOpen(false);
         navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
