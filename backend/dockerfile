@@ -1,0 +1,21 @@
+# choose starting template (this case it is node version 18)
+FROM node:20.1
+
+# choose directory to start from
+WORKDIR /app
+
+#cache layers to avoid reinstalling uneccesary things
+#local package json directory
+COPY package*.json ./
+
+#install dependencies
+RUN npm install
+
+COPY . .
+
+ENV PORT=8080
+
+EXPOSE 8080
+
+#can only have 1 command per docker file
+CMD ["npm", "start"]
