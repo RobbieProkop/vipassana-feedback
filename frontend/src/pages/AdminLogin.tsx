@@ -8,7 +8,7 @@ import styles from "../styles/feedbackForm.module.scss";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { checkAuth } from "../utils/helpers";
-const isLogged = await checkAuth(false);
+// const isLogged = checkAuth(false);
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -23,9 +23,12 @@ const AdminLogin = () => {
     //   localStorage.removeItem("userInfo");
     //   navigate("/login");
     // }
-    if (isLogged) {
-      navigate("/feedbackDashboard");
-    }
+    const checkAuthentication = async () => {
+      if (await checkAuth(false)) {
+        navigate("/feedbackDashboard");
+      }
+    };
+    checkAuthentication();
   }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

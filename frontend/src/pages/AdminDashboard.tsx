@@ -34,7 +34,7 @@ const AdminDashboard = () => {
   const [feedback, setFeedback] = useState<Feedback[]>([]);
   //for card active state
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [_, setIsOpen] = useState<boolean>(false);
 
   //onclick and on change functions
   const onClick = async () => {
