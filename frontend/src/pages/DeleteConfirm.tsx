@@ -3,7 +3,6 @@ import { USERS_URL } from "../constants";
 import axios from "axios";
 import { User } from "../utils/states";
 import { useEffect, useState } from "react";
-import profile from "../styles/profile.module.scss";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 

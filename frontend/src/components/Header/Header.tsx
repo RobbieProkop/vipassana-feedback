@@ -23,7 +23,7 @@ const Header: FC<HeaderProps> = ({ navOpen, setNavOpen }) => {
       .get(`${USERS_URL}/logout`, {
         withCredentials: true,
       })
-      .then((res) => {
+      .then(() => {
         setNavOpen(false);
         navigate("/login");
       })
