@@ -1,0 +1,48 @@
+# # choose starting template (this case it is node version 18)
+# FROM node:20.1
+
+# # choose directory to start from
+# WORKDIR /app
+
+# #cache layers to avoid reinstalling uneccesary things
+# #local package json directory
+# COPY package*.json ./
+
+# #install dependencies
+# RUN npm install
+
+# COPY . .
+
+# ENV PORT=5173
+
+# EXPOSE 8080
+
+# #can only have 1 command per docker file
+# CMD ["npm", "start"]
+
+FROM node:20.1
+# make the 'app' folder the current working directory
+WORKDIR /app
+# install mysql dependencies
+RUN apt-get update \
+    && apt-get install nginx
+# copy 'package.json' to install dependencies
+COPY ./frontend/package*.json ./
+COPY ./frontend/src/conf/nginx/* /etc/nginx/http.d/default.conf
+# install dependencies
+RUN npm install
+# copy files and folders to the current working directory (i.e. 'app' folder)
+COPY ./frontend .
+# build app for production with minification
+RUN npm run build
+
+# RUN adduser -D little_library
+# RUN chown -R little_library:little_library ./
+# USER little_library
+
+EXPOSE 5173
+
+# configure the container to run in an executed manner
+ENTRYPOINT [ "sh" ]
+
+CMD ["./src/conf/start.sh" ]
