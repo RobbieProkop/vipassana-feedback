@@ -3,7 +3,7 @@ version: "3.8"
 services:
   db: #Hostname
     container_name: vipassana_feedback_db
-    image: postgres:16.1
+    image: postgres:14
     volumes:
       - ${DB_NAME}:/var/lib/postgres
     healthcheck:
@@ -24,10 +24,9 @@ services:
     ports:
       - "8080"
     environment:
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_HOST: ${DB_HOST}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
       JWT_SECRET: ${JWT_SECRET}
       NODE_ENV: ${NODE_ENV}
     restart: unless-stopped
