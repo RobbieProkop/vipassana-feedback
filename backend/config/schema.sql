@@ -29,36 +29,36 @@ CREATE TABLE users (
 
 -- insert dummy data
 
-INSERT INTO feedback (
-    name, 
-    email, 
-    course_start_date, 
-    days_served, 
-    question1, 
-    question2, 
-    question3, 
-    question4, 
-    q5_onboarding_rating, 
-    q5_resources_rating, 
-    q5_food_rating, 
-    q5_overall_experience_rating, 
-    additional_feedback
-)
-VALUES (
-    'John Doe', 
-    'john.doe@example.com', 
-    '2023-09-01', 
-    5, 
-    'To gain more experience in the field.', 
-    'Yes, I felt valued.', 
-    'No, I am looking forward to coming back.', 
-    'Personal commitments.', 
-    5, 
-    4, 
-    5, 
-    5, 
-    'The experience was wonderful, looking forward to more opportunities.'
-);
+-- INSERT INTO feedback (
+--     name, 
+--     email, 
+--     course_start_date, 
+--     days_served, 
+--     question1, 
+--     question2, 
+--     question3, 
+--     question4, 
+--     q5_onboarding_rating, 
+--     q5_resources_rating, 
+--     q5_food_rating, 
+--     q5_overall_experience_rating, 
+--     additional_feedback
+-- )
+-- VALUES (
+--     'John Doe', 
+--     'john.doe@example.com', 
+--     '2023-09-01', 
+--     5, 
+--     'To gain more experience in the field.', 
+--     'Yes, I felt valued.', 
+--     'No, I am looking forward to coming back.', 
+--     'Personal commitments.', 
+--     5, 
+--     4, 
+--     5, 
+--     5, 
+--     'The experience was wonderful, looking forward to more opportunities.'
+-- );
 
 -- -- user schema
 -- CREATE TABLE users (
