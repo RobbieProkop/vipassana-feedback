@@ -4,29 +4,33 @@ services:
   db: #Hostname
     container_name: vipassana_feedback_db
     image: postgres:14
+    build: ./database
     volumes:
-      - ${DB_NAME}:/var/lib/postgres
+      - ./pgdata:/var/lib/postgres/data
     healthcheck:
-      test: ""
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 20s
       timeout: 10s
       retries: 5
     environment:
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_HOST: ${DB_HOST}
+      POSTGRES_USER: {DB_USER}
+      POSTGRES_PASSWORD: {DB_PASSWORD}
+      POSTGRES_DB: {DB_NAME}
+    ports:
+      - "5432:5432"
     restart: unless-stopped
 
   server: #hostname
     container_name: vipassana_feedback_backend
     build: ./backend
     ports:
-      - "8080"
+      - "8080:8080"
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: db
+      DB_PORT: 5432
       JWT_SECRET: ${JWT_SECRET}
       NODE_ENV: ${NODE_ENV}
     restart: unless-stopped
@@ -35,5 +39,5 @@ services:
     container_name: vipassana_feedback_frontend
     build: ./frontend
     ports:
-      - "5173"
+      - "5173:5173"
     restart: unless-stopped
