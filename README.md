@@ -10,9 +10,9 @@ Building the first version using a backend Node Express server, with a PostgreSQ
 2. cd to the root directory
 3. create a docker-compose.yaml file, based on the docker compose template
 4. add the environtment variables to the docker compose file
-5. run the docker compose file with ```docker compose up```
-6. access psql from the container running postgres 
+5. build the docker images with ```docker compose build```
+6. run the docker compose file with ```docker compose up```
+7. access psql from the container running postgres 
 ```docker exec -it vipassana_feedback_db psql -U postgres -d vipassanaFeedback```
-7. add the tables from the /backend/config/schema.sql
 8. add an admin user from psql
 9. navigate to localhost:5173 to visit the frontend of the webapp

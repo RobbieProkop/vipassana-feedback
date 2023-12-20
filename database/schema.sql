@@ -27,6 +27,9 @@ CREATE TABLE users (
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+-- EXAMPLE INSERT STATEMENTS
+
 -- insert dummy data
 
 -- INSERT INTO feedback (
@@ -75,7 +78,7 @@ CREATE TABLE users (
 --     username, 
 --     email, 
 --     password,
---     isAdmin,
+--     "isAdmin" 
 -- )
 -- VALUES (
 --     process.env.ADMIN_NAME,
