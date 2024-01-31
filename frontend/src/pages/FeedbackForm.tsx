@@ -95,7 +95,11 @@ const FeedbackForm = () => {
       return;
     }
 
-    await axios.post("http://localhost:8080/api/feedback", formData);
+    // await axios.post("http://localhost:8080/api/feedback", formData); // for testing locally
+    await axios.post(
+      "https://dso-api-karuna.dhamma.org/api/feedback",
+      formData
+    );
     navigate("/feedback/thankyou");
   };
 
