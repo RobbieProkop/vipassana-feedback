@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { testDbConnection } from "./config/db.js";
 
 const PORT = process.env.PORT || 8080;
 dotenv.config();
@@ -29,12 +30,16 @@ app.use(
 //this is an example of a route handler to spin up the server
 app.get("/api/heartbeat", async (req, res) => {
   try {
+    testDbConnection();
     res.json({ message: "Server heartbeat" });
+
   } catch (error) {
     console.log("error :>> ", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });
+
+console.log("bro. ", await testDbConnection())
 
 app.use("/api/authenticate", authRoutes);
 

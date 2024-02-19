@@ -19,6 +19,7 @@ const loginUser = asyncHandler(async (req, res) => {
   //check if user exists
   const user = await User.findOne({ where: { username } });
 
+
   if (!user) return throwError(res, 401, "Invalid credentials");
 
   const hashedPassword = user.password;

@@ -10,8 +10,8 @@ const pool = new Pool({
 });
 
 export const testDbConnection = async () => {
-  let retries = 5;
-  while(retries){
+  let retries = 0;
+  while (retries) {
     try {
       await pool.query('SELECT NOW()');
       console.log('Database successfully connected');

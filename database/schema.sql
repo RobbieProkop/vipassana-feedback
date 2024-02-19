@@ -81,8 +81,16 @@ CREATE TABLE users (
 --     "isAdmin" 
 -- )
 -- VALUES (
---     process.env.ADMIN_NAME,
---     process.env.ADMIN_EMAIL,
---     process.env.ADMIN_PASSWORD,
---     true,
--- )
+--     'RobbieProkop',
+--     'robbie.prokop@dhamma.org',
+--     'LetsPasswordAllDay!',
+--     true
+-- );
+
+
+-- TODO
+
+
+-- - figure out why these credentials are invalid. 
+-- - now getting a 401 error when trying to login
+-- - docker containers are up and running, they should be working fine. the DB has been created with users and feedback tables

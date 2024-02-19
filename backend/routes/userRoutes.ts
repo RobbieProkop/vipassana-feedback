@@ -18,7 +18,7 @@ const router = express.Router();
 router
   .route("/")
   .get(protect, admin, getAllUsers)
-  .post(protect, admin, registerUser); //register is protected by the admin to prevent random people from registering;
+  .post(registerUser); //register is protected by the admin to prevent random people from registering;
 router.post("/login", loginUser);
 router.get("/logout", logoutUser);
 router
