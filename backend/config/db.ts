@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 export const testDbConnection = async () => {
-  let retries = 0;
+  let retries = 1;
   while (retries) {
     try {
       await pool.query('SELECT NOW()');

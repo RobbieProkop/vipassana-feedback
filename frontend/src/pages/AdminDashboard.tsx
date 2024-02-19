@@ -11,6 +11,7 @@ const isLogged = checkAuth(false);
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!isLogged) {
@@ -54,6 +55,7 @@ const AdminDashboard = () => {
       });
       return;
     }
+    setLoading(true);
 
     const { data } = await axios.get(`${BASE_URL}/api/feedback`, {
       params: {
@@ -61,7 +63,19 @@ const AdminDashboard = () => {
         endDate,
       },
     });
-    setFeedback(data);
+
+    if (!data || data.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Could not find any data matching your dates",
+      });
+    } else {
+      setTimeout(() => {
+        setFeedback(data);
+        setLoading(false);
+      }, 1000);
+    }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -30,8 +30,12 @@ app.use(
 //this is an example of a route handler to spin up the server
 app.get("/api/heartbeat", async (req, res) => {
   try {
-    testDbConnection();
+    const response = testDbConnection();
+    if (response) {
+      console.log('response from heartbeat connection :>> ', await response);
+    }
     res.json({ message: "Server heartbeat" });
+
 
   } catch (error) {
     console.log("error :>> ", error);

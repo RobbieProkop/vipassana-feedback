@@ -107,7 +107,7 @@ const FeedbackForm = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: `${res.data.err.name}: ==> ${res.data.err.error}`,
+          text: `${res.data.err.name}: ==> ${res.data.error}`,
         });
       } else {
         setTimeout(() => {
