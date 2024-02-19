@@ -3,9 +3,12 @@ import styles from "../styles/feedbackForm.module.scss";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spinner/Spinner";
+import { BASE_URL } from "../constants";
 
 const FeedbackForm = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
   const today = new Date();
 
   interface Question5State {
@@ -81,6 +84,7 @@ const FeedbackForm = () => {
   };
   const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    // setLoading(true);
     const formFilled = [courseStart, daysServed, q1, q2, q3, q4].every(
       (value) => value !== ""
     );
@@ -92,16 +96,37 @@ const FeedbackForm = () => {
         title: "Incomplete Form",
         text: "Please fill in all required fields",
       });
+      setLoading(false);
       return;
     }
 
-    // await axios.post("http://localhost:8080/api/feedback", formData); // for testing locally
-    await axios.post(
-      "https://dso-api-karuna.dhamma.org/api/feedback",
-      formData
-    );
-    navigate("/feedback/thankyou");
+    const res = await axios.post(`${BASE_URL}/api/feedback`, formData);
+    console.log("res :>> ", res);
+    if (res) {
+      if (res.data.err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${res.data.err.name}: ==> ${res.data.err.error}`,
+        });
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/feedback/thankyou");
+        }, 1000);
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Could not connect to the database",
+      });
+      setLoading(false);
+      navigate("/");
+    }
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <div className={styles.form}>

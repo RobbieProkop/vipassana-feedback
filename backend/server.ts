@@ -21,8 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    // origin: "http://localhost:5173", // for local testing
-    origin: "https://dso-karuna.dhamma.org",
+    origin: "http://localhost:5173", // for local testing
+    // origin: "https://dso-karuna.dhamma.org",
     credentials: true,
   })
 );
