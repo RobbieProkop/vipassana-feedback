@@ -26,4 +26,6 @@ build
 *.sln
 *.sw?
 
+pgdata
+
 docker-compose.yaml

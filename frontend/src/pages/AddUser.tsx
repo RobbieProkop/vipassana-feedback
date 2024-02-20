@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../constants";
 
 const AddUser = () => {
   const navigate = useNavigate();
@@ -86,8 +87,7 @@ const AddUser = () => {
     }
 
     try {
-      const { data } = await axios.post("/api/users", formData);
-      console.log("{data} :>> ", data);
+      const { data } = await axios.post(`${BASE_URL}/api/users`, formData);
       toast.success(data.message);
       navigate("/admin/users");
     } catch (error) {

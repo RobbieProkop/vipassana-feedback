@@ -35,7 +35,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // Route: POST /api/users
 // Access: Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, isAdmin } = req.body;
 
   if (!username || !email || !password)
     return throwError(res, 400, "Please fill in all fields");
@@ -54,7 +54,7 @@ const registerUser = asyncHandler(async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      isAdmin: false,
+      isAdmin,
     });
 
     if (user) {

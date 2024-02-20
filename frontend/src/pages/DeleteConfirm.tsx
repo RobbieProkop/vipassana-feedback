@@ -25,7 +25,6 @@ const DeleteConfirm = () => {
 
   useEffect(() => {
     findUser();
-    console.log(user);
   }, []);
 
   const deleteUser = async () => {
