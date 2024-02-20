@@ -3,10 +3,11 @@ import Swal from "sweetalert2";
 import styles from "../styles/feedbackForm.module.scss";
 import profile from "../styles/profile.module.scss";
 import axios from "axios";
-import { USERS_URL } from "../constants";
+import { BASE_URL, USERS_URL } from "../constants";
 import { useNavigate } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
 import { checkAuth } from "../utils/helpers";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -91,8 +92,9 @@ const Profile = () => {
     }
 
     try {
-      const res = await axios.put("/api/users/profile", formData);
+      const res = await axios.put(`${BASE_URL}/api/users/profile`, formData);
       console.log("res :>> ", res);
+      navigate("/profile");
     } catch (error) {
       console.log("error :>> ", error);
       Swal.fire({
@@ -130,6 +132,11 @@ const Profile = () => {
         withCredentials: true,
       });
       console.log("res :>> ", res);
+      toast.success("Password Updated");
+      // window.location.href = "/profile";
+
+      ///NAGIVATE NOT WORKING ATM --- WHY?!
+      navigate("/profile");
     } catch (error) {
       console.log("error :>> ", error);
       Swal.fire({

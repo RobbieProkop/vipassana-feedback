@@ -52,8 +52,6 @@ const DeleteConfirm = () => {
     navigate("/admin/users");
   };
 
-  console.log(user);
-
   return (
     <div className="container">
       <h1>

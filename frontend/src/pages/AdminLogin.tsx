@@ -51,9 +51,7 @@ const AdminLogin = () => {
     try {
       setLoading(true);
       setError(false);
-      const { data } = await axios.post(`${USERS_URL}/login`, userData, {
-        withCredentials: true,
-      });
+      const { data } = await axios.post(`${USERS_URL}/login`, userData);
       toast.success(`Welcome ${data.username}`);
       localStorage.setItem("userInfo", JSON.stringify(data));
 
