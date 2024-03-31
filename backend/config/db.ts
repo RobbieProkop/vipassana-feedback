@@ -9,20 +9,23 @@ const pool = new Pool({
   database: process.env.DB_NAME,
 });
 
-export const testDbConnection = async () => {
-  let retries = 1;
+export const testDbConnection = async (): Promise<string | boolean> => {
+  let retries = 2;
   while (retries) {
     try {
-      await pool.query('SELECT NOW()');
+      const now = await pool.query('SELECT NOW()');
       console.log('Database successfully connected');
-      break
-    } catch (error) {
+      console.log('now :>> ', now.rows[0].now);
+      return `Connected at: ${now.rows[0].now}`;
+
+    } catch (error: unknown) {
       console.log('error: Database failed to connect :>> ', error);
       retries -= 1;
       console.log('retries left:>> ', retries);
-      await new Promise(res => setTimeout(res, 5000))
+      await new Promise<void>(res => setTimeout(res, 5000))
     }
   }
+  return false;
 }
 
 export default pool;

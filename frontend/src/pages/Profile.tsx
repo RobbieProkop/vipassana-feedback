@@ -133,7 +133,7 @@ const Profile = () => {
       });
       console.log("res :>> ", res);
       toast.success("Password Updated");
-      // window.location.href = "/profile";
+      window.location.href = "/profile";
 
       ///NAGIVATE NOT WORKING ATM --- WHY?!
       navigate("/profile");

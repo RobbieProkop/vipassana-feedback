@@ -21,14 +21,59 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 //access: Private
 const getFeedbackForDate = asyncHandler(async (req, res) => {
   const { startDate, endDate } = req.query;
-  if (!startDate || !endDate) {
-    return res.status(400).json({ message: "Start & End dates are required" });
+  if (!startDate && !endDate) {
+    const feedback = await sequelize.query(
+      `SELECT * FROM feedback
+      ORDER BY id DESC;
+      `,
+      {
+        raw: true,
+        type: QueryTypes.SELECT
+      }
+    );
+    return res.status(200).json(feedback);
+    // return res.status(400).json({ message: "Start & End dates are required" });
+  }
+
+  if (startDate && !endDate) {
+    const feedback = await sequelize.query(
+      `SELECT * FROM feedback
+      WHERE CAST(submitted_at as DATE) >= :startDate 
+      ORDER BY id DESC;
+      `,
+      {
+        raw: true,
+        type: QueryTypes.SELECT,
+        replacements: {
+          startDate,
+        },
+      }
+    );
+    res.status(200).json(feedback);
+  }
+
+  if (!startDate && endDate) {
+    const feedback = await sequelize.query(
+      `SELECT * FROM feedback
+      WHERE CAST(submitted_at as DATE) <= :endDate 
+      ORDER BY id DESC;
+      `,
+      {
+        raw: true,
+        type: QueryTypes.SELECT,
+        replacements: {
+          endDate,
+        },
+      }
+    );
+    res.status(200).json(feedback);
   }
   if (startDate > endDate) {
     return res
       .status(400)
       .json({ message: "Start date cannot be after end date" });
   }
+
   const feedback = await sequelize.query(
     `SELECT * FROM feedback
     WHERE CAST(submitted_at as DATE) BETWEEN :startDate AND :endDate
