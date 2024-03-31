@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { DateState, Feedback } from "../utils/states";
 import Card from "../components/Card/Card";
 import { checkAuth } from "../utils/helpers";
+import Spinner from "../components/Spinner/Spinner";
 const isLogged = checkAuth(false);
 
 const AdminDashboard = () => {
@@ -39,14 +40,6 @@ const AdminDashboard = () => {
 
   //onclick and on change functions
   const onClick = async () => {
-    if (!startDate || !endDate) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please enter a start & end date",
-      });
-      return;
-    }
     if (startDate > endDate) {
       Swal.fire({
         icon: "error",
@@ -94,6 +87,8 @@ const AdminDashboard = () => {
       setActiveCardId(id);
     }
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <div className="container">
