@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import asyncHandler from "../middleware/asyncHandler.js";
 dotenv.config();
 
-import { Sequelize, DataTypes, Op, QueryTypes } from "sequelize";
+import { Sequelize, QueryTypes } from "sequelize";
 const { DB_HOST, DB_USER, DB_PORT, DB_PASSWORD, DB_NAME } = process.env;
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
@@ -198,7 +198,7 @@ const submitFeedback = asyncHandler(async (req, res) => {
     );
 
     if (!data) {
-      res.status(400);
+      res.status(400).json({ error: "Error Submitting Feedback" });
       throw new Error("Error Submitting Feedback");
     }
   } catch (err) {
