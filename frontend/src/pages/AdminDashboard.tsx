@@ -63,6 +63,7 @@ const AdminDashboard = () => {
         title: "Oops...",
         text: "Could not find any data matching your dates",
       });
+      setLoading(false);
     } else {
       setTimeout(() => {
         setFeedback(data);
